@@ -1,0 +1,20 @@
+# Tristan Hilbert
+# 4/3/2019
+# Simple Git ignore for a nodeJs Project
+#
+# Added includes for possible VScode Stuff
+
+
+**/node_modules/**
+
+# This was suggested in the example gitignore
+**/credentials.js
+
+**/.vscode/**
+
+# Weird FTP Directories that appear for me
+**/.AppleDouble/**
+**/AppleDouble/**
+
+# Do not share details of Database
+**/dbcon.js
