@@ -5,7 +5,9 @@
 # Added includes for possible VScode Stuff
 
 
+# Additional Node Blocks
 **/node_modules/**
+**/package-lock.json
 
 # This was suggested in the example gitignore
 **/credentials.js
