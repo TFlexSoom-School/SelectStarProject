@@ -1,19 +1,19 @@
 /*
  * Gary Luong
  * Tristan Hilbert
- * 
+ *
  * 5/3/2019
- * 
+ *
  * Root Script for Running Site
  * Using:
  * render
  * handlebars
  * sass
- * 
+ *
  */
 
 /* INCLUDES */
-const cwd = process.cwd;
+const cwd = process.cwd();
 const app = require("express")();
 const sassComp = require("express-compile-sass");
 const handle = require("express-handlebars")
@@ -43,8 +43,13 @@ if(process.env.PORT){
 
 /* ADD GET Rules */
 app.get('/', (req, res) => {
-    console.log("== CONNECTION -> SENDING views/index");
-    res.render("index");
+    if(req.url === '/'){
+        console.log("== CONNECTION -> SENDING index");
+        res.render("index");
+    } else {
+        console.log("== CONNECTION -> SENDING " + req.url);
+        res.render(req.url);
+    }
 });
 
 /* LISTEN */
