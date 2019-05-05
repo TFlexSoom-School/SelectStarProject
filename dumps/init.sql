@@ -1,4 +1,4 @@
--- Grant and Tristan's Initial SQL queries
+-- Gary and Tristan's Initial SQL queries
 -- Use these to create the tables
 
 -- Drop any existing tables :P
