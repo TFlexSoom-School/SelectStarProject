@@ -1,0 +1,90 @@
+{
+    "MRG": {
+        "date":"February 6th 2020",
+        "location": "Ancient Egypt",
+        "home":"Pathfinders",
+        "visit":"Jaxers"
+    },
+    "player": [
+        {
+            "first_name": "Michael",
+            "last_name": "Scott",
+            "team": "Lakers",
+            "jersey_num": "25",
+            "games": "2",
+            "points": "0",
+            "position": [
+                {
+                    "position_name": "Center"
+                },
+                {
+                    "position_name": "Backboard"
+                }
+            ]
+        },
+        {
+            "first_name": "Jamie",
+            "last_name": "Foxx",
+            "team": "Lakers",
+            "jersey_num": "12",
+            "games": "2",
+            "points": "100",
+            "position": [
+                {
+                    "position_name": "Point Guard"
+                }
+            ]
+        },
+        {
+            "first_name": "Yolo",
+            "last_name": "McSweggins",
+            "team": "Swegilicious",
+            "jersey_num": "6",
+            "games": "5",
+            "points": "5000",
+            "position": [
+                {
+                    "position_name": "Elbow"
+                }
+            ]
+        }
+    
+    ],
+    "team": [
+        {
+            "name": "Lakers",
+            "color": "#FFFFF0",
+            "coach": "Drake Rake"
+        },
+        {
+            "name": "McSwaggins",
+            "color": "#FF0000",
+            "coach": "Teemo"
+        },
+        {
+            "name": "Not Placeholder",
+            "color": "#FEED00",
+            "coach": "Mi Chinkov"
+        }
+    ],
+    "mascot": [
+        {
+            "name": "Limmy the Lake",
+            "animal": "Lake",
+            "team": "Lakers",
+            "color": "#FFFFF0"
+        },
+        {
+            "name": "Darius",
+            "animal": "Yordle",
+            "team": "McSwaggins",
+            "color": "#FF0000"
+        },
+        {
+            "name": "Stukov",
+            "animal": "scythe",
+            "team": "Not Placeholder",
+            "color": "#FEED00"
+        }
+    ]
+}

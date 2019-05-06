@@ -1,14 +1,15 @@
+<!-- Script Goes Here -->
 <main>
     <div>
-        <p>Search for a Team</p>
+        <p>Search for a Mascot</p>
         <form>
             <input type="text" name="searchbar" defaultValue="Search...">
             <div class="button search-submit" onclick="search()">Search!</div> 
         </form>
     </div>
     <div class="results">
-        {{#each team}}
-            {{> single-team}}
+        {{#each mascot}}
+            {{> single-mascot}}
         {{/each}}
     </div>
 </main>

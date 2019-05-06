@@ -14,9 +14,14 @@
 
 /* INCLUDES */
 const cwd = process.cwd();
-const app = require("express")();
+const express = require("express");
+const app = express();
 const sassComp = require("express-compile-sass");
-const handle = require("express-handlebars")
+const handle = require("express-handlebars");
+
+/* Data for initial templates*/
+var data = require("./content.json");
+//console.log(JSON.stringify(data));
 
 /* Middleware setup */
 app.engine('handlebars', handle({defaultLayout: 'main'}));
@@ -31,6 +36,8 @@ app.use(
     })
 )
 
+app.use(express.static(cwd));
+
 var PORT_NUM = 0;
 
 if(process.env.PORT){
@@ -43,13 +50,28 @@ if(process.env.PORT){
 
 /* ADD GET Rules */
 app.get('/', (req, res) => {
-    if(req.url === '/'){
-        console.log("== CONNECTION -> SENDING index");
-        res.render("index");
-    } else {
-        console.log("== CONNECTION -> SENDING " + req.url);
-        res.render(req.url);
-    }
+    console.log("== DIR -> SENDING DEFAULT ==");
+    console.log("== CONNECTION -> SENDING index");
+    res.render("index", data);
+});
+
+app.get('*.html', (req, res) => {
+    console.log("== CONNECTION -> REQUESTING " + req.url);
+    var send = req.url.substring(1, req.url.lastIndexOf(".html"));
+    console.log("== SENDING " + send);
+    res.render(send, data);
+});
+
+app.get('*.scss', (req, res) => {
+    console.log("== CONNECTION -> Stylesheet");
+    console.log("== Requested -> " + req.url);
+    res.render(req.url);    
+});
+
+app.get('*', (req, res) => {
+    console.log("== CONNECTION -> ERROR 404");
+    console.log("== Big oof -> " + req.url);
+    res.status(404).render("404");
 });
 
 /* LISTEN */
