@@ -1,0 +1,15 @@
+<div class="player-box">
+    <h3>{{first_name}} {{last_name}}</h3>
+    <ul>
+        <li>Team: {{team}}</li>
+        <li>Jersey Number: {{jersey_num}}</li>
+        <li>Nickname: {{nickname}}</li>
+        <li>Games Played: {{games}}</li>
+        <li>Points Made: {{points}}</li>
+        <li> Plays Positions:
+        {{#each position}}
+            {{position_name}} |
+        {{/each}}
+        </li>
+    </ul>
+</div>

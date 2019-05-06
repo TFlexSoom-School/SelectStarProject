@@ -1,0 +1,15 @@
+<!-- Script Goes Here -->
+<main>
+    <div>
+        <p>Search for a Player</p>
+        <form>
+            <input type="text" name="searchbar" defaultValue="Search...">
+            <div class="button search-submit" onclick="search()">Search!</div> 
+        </form>
+    </div>
+    <div class="results">
+        {{#each player}}
+            {{> single-player}}
+        {{/each}}
+    </div>
+</main>
