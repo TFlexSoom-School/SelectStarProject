@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "test": "echo ERROR - No test script",
-    "start": "./node_modules/.bin/forever start src/index.js",
+    "start": "./node_modules/.bin/forever start index.js",
     "kill": "./node_modules/.bin/forever stopAll"
   },
   "repository": {
