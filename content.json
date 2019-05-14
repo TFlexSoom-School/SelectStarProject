@@ -67,7 +67,7 @@
         {
             "name": "Cavaliers",
             "color": "#860038",
-            "coach": "Tyronn Lue"
+            "coach": "Click a Coach's Name to update Coach"
         }
     ],
     "mascot": [
@@ -78,8 +78,8 @@
             "color": "#006BB6"
         },
         {
-            "name": "Kristofer",
-            "animal": "Ackermann",
+            "name": "Kristofer Ackermann",
+            "animal": "leprechan",
             "team": "Celtics",
             "color": "#008853"
         },
@@ -88,6 +88,29 @@
             "animal": "Sir C. C.",
             "team": "Cavaliers",
             "color": "#860038"
+        }
+    ],
+    "game": [
+        {
+            "date":"March 3, 2019",
+            "location": "Los Angelos",
+            "home":"Lakers",
+            "h_score": "107",
+            "visit":"Celtics",
+            "v_score": "120",
+            "winner":"Celtics"
+        },
+        {
+            "date":"Februrary 2, 2019",
+            "location": "Philadelphia",
+            "home":"76ers",
+            "h_score": "105",
+            "visit":"Lakers",
+            "v_score": "128",
+            "winner": "Lakers",
+            "mvp": {
+                "name" : "Timothy McConnell"
+            }
         }
     ]
 }

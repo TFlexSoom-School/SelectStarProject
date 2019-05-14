@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<!-- saved from url=(0033)http://localhost:11777/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!-- Meta tags -->
+        
+        <meta name="description" content="A web app to find basketball player stats.">
+        <meta name="application-name" content="Sports Stats Plus">
+        <meta name="author" content="Select Star">
+        <meta name="keywords" content="Sports,Database,Basketball,Free">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+        <!-- Third Party -->
+        <link rel="stylesheet" href="./Sports Stats Plus_files/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <!-- Global CSS -->
+        <link href="./Sports Stats Plus_files/style.scss" rel="stylesheet">
+        <!-- Global JS -->
+    
+        
+        <title>Sports Stats Plus</title>
+    </head>
+    <body><div id="i4c-draggable-container" style="position: fixed; z-index: 1499; width: 0px; height: 0px;"><div data-reactroot="" class="resolved" style="all: initial;"></div></div>
+    <nav>
+        <div>
+            <a class="logo-link" href="http://localhost:11777/index.html">
+                <img class="logo-link" src="./Sports Stats Plus_files/icon_color.png">
+            </a>
+        </div>
+        <ul>
+            <li><a href="http://localhost:11777/players.html">Players</a></li>
+            <li><a href="http://localhost:11777/teams.html">Teams</a></li>
+            <li><a href="http://localhost:11777/games.html">Games</a></li>
+            <li><a href="http://localhost:11777/mascots.html">Mascots</a></li>
+        </ul>
+    </nav>
+    <!-- Script Goes Here -->
+<main>
+    <div>
+        <h1>Welcome to Sports Stats Plus</h1>
+    </div>
+    <div>
+        <p>Most Recent Game</p>
+        <ul>
+            <li>Date: March 3, 2019</li>
+            <li>Location: Los Angelos</li>
+            <li>Home Team: Lakers</li>
+            <li>Visiting Team: Celtics</li>
+        </ul>
+    </div>
+    <div>
+        <p>Search a Game or a Team</p>
+        <form>
+            <input type="text" name="searchbar" defaultvalue="Search...">
+            <div class="button search-submit" onclick="search()">Search!</div> 
+        </form>
+        <div id="results">
+            <p>Results for Search will go here!</p>
+        </div>
+    </div>
+    <div>
+        <h2>Pages and Descriptions</h2>
+        <div>
+            <h3><a>players</a></h3>
+            <p>
+                The players page will list a series of players in the forms of cards. These cards
+                will entail the details of each player entity. There will be search box to query 
+                for players by name. You can also add players with a modal that will be within this page.
+                This is similar to a CS290 project I accomplished 
+                <a href="http://web.engr.oregonstate.edu/~hilbertt/cs290/BennysList/">here</a>.
+                There will also be a filter box to filter by position. This can be added to similar
+                to the city example from the above link (Just with different code). People can also be
+                removed from this page, making sure to remove any references alongside.
+            </p>
+        </div>
+        <div>
+            <h3><a>teams</a></h3>
+            <p>
+                Encapsulating the team entity, this page will row by row display the different teams in the
+                database. It will have a link to the players page with a pre-queried player search. (This could
+                be done through a GET header) It will also link to the respective mascot. Functionality will
+                be provided to add teams by using already created players without teams. One may also create a new
+                mascot on this page and add it to the respective team. One may also delete teams and mascots from this
+                page. Finally, functionality will be here to kick of players from the team.
+            </p>
+        </div>
+        <div>
+            <h3><a>games</a></h3>
+            <p>
+                Similar to above games can be added and deleted from this page. This page will also
+                carry links to the teams page and host the mvp of each game. The content will be held
+                in rows, but the rows will have large heights. The mvp will only be shown if not null.
+            </p>
+        </div>
+        <div>
+            <h3><a>Mascots</a></h3>
+            <p>
+                Similar to players, a user can query for Mascots. Functionality will be provided to add mascots,
+                but they can only be attached to teams without mascots. There is also links to get a detailed view
+                of the mascots. One may also delete Mascots from this page.
+            </p>
+        </div>
+    </div>
+</main>
+
+    <footer>
+        <div>
+            <ul>
+                <li><a>About Us</a></li>
+                <li><a>GitHub</a></li>
+                <li><a>Documentation</a></li>
+            </ul>
+        </div>
+        <div>
+            <p>
+                COPYRIGHT SELECT STAR 2019
+            </p>
+        </div>
+    </footer>    
+    
+<div id="i4c-dialogs-container"></div></body></html>

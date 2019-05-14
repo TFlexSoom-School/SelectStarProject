@@ -1,1 +1,38 @@
-<h1>Games!</h1>
+<main>
+    <div>
+        <p>Search for a Game</p>
+        <form>
+            <input type="text" name="searchbar" value="Search...">
+            <div class="button search-submit" onclick="search()">Search!</div> 
+        </form>
+        <p>Search will filter results below!</p>
+    </div>
+    <div class="results">
+        {{#each game}}
+            {{> single-game}}
+        {{/each}}
+    </div>
+    <div class="hidden">
+        <h2>New Game!</h2>
+        <form>
+            <label>Game Date</label>
+            <input type="date" name="game-date">
+            <label>City</label>
+            <input type="text" name="game-loc" value="Seattle">
+            <label>Home Team Name</label>
+            <input type="text" name="game-h-team" value="Home Team">
+            <label>Visiting Team Name</label>
+            <input type="text" name="game-v-team" value="Visiting Team">
+            <label>Visiting Team Location</label>
+            <input type="text" name="game-v-team-loc" value="Los Angelos">
+            <label>Home Team Score</label>
+            <input type="number" name="score-h">
+            <label>Visiting Team Score</label>
+            <input type="number" name="score-v">
+            <label>MVP First Name</label>
+            <input type="text" name="mvp-fname" value="Gary">
+            <label>MVP Last Name</label>
+            <input type="text" name="mvp-lname" value="Luong">
+        </form>
+    </div>
+</main>

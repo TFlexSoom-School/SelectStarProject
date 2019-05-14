@@ -1,4 +1,4 @@
--- Gary and Tristan's Initial SQL queries
+-- Gary and Tristan"s Initial SQL queries
 -- Use these to create the tables
 
 -- Drop any existing tables :P
@@ -85,6 +85,11 @@ CREATE TABLE ssp_mascots (
 
 
 -- KEY DECLARATIONS --
+ALTER TABLE ssp_teams
+    ADD KEY (name, location),
+    ADD KEY (name, coach),
+    ADD KEY (name, color),
+    ADD KEY (location, color);
 
 ALTER TABLE ssp_players
     ADD CONSTRAINT FK_PersonTeam
@@ -139,59 +144,149 @@ ALTER TABLE ssp_mascots
 
 -- EXAMPLE INFO --
 
+-- TEAMS --
+
 INSERT INTO ssp_teams (name, location, color, coach)
 VALUES 
 ("Lakers", "Los Angelos", "552084", "Luke Walton"),
 ("Celtics", "Boston", "008853", "Brad Stevens"),
 ("Cavaliers", "Cleveland", "860038", "Tyronn Lue"),
-("76ers", "Philadelphia", "006BB6", "Brett Brown");
+("76ers", "Philadelphia", "006BB6", "Brett Brown"),
+("Golden State Warriors", "Oakland, CA", "FFF00", "Steve Kerr"),
+("Portland Trailblazers", "Portland, OR", "FF0000", "Terry Stotts"),
+("Milwaukee Bucks", "Milwaukee, WI", "008000", "Mike Budenholzer"),
+("Toronto Raptors", "Toronto, ON", "FF0000", "Nick Nurse");
+
+-- PLAYERS -- 
 
 INSERT INTO ssp_players (team_id, jersey, fname, lname, nickname, games, points)
 VALUES
-(1, 34, "Shaquille", "O'Neal", "Shaq", 1207, 28606),
-(1, 4, "Alex", "Caruso", NULL, 62, 365),
-(2, 4, "Tony", "Battie", NULL, 837, 5106),
-(2, 44, "Danny", "Ainge", NULL, 1024, 11983),
-(3, 32, "Deng", "Adel", NULL, 19, 32),
-(4, 22, "Wilson", "Chandler", NULL, 641, 8269),
-(4, 12, "Timothy", "McConnell", "T.J.", 314, 2010);
-
+((select id from ssp_teams where name = "Lakers"), 34, "Shaquille", "O'Neal", "Shaq", 1207, 28606),
+((select id from ssp_teams where name = "Lakers"), 4, "Alex", "Caruso", NULL, 62, 365),
+((select id from ssp_teams where name = "Celtics"), 4, "Tony", "Battie", NULL, 837, 5106),
+((select id from ssp_teams where name = "Celtics"), 44, "Danny", "Ainge", NULL, 1024, 11983),
+((select id from ssp_teams where name = "Cavaleirs"), 32, "Deng", "Adel", NULL, 19, 32),
+((select id from ssp_teams where name = "76ers"), 22, "Wilson", "Chandler", NULL, 641, 8269),
+((select id from ssp_teams where name = "76ers"), 12, "Timothy", "McConnell", "T.J.", 314, 2010),
+((select id from ssp_teams where name = "Golden State Warriors"), 30, "Stephen", "Curry", "Human Torch", 1, 33),
+((select id from ssp_teams where name = "Golden State Warriors"), 11, "Klay", "Thompson", null, 1, 20),
+((select id from ssp_teams where name = "Golden State Warriors"), 23, "Draymond", "Green", "Dray", 1, 10),
+((select id from ssp_teams where name = "Portland Trailblazers"), 0, "Damian", "Lillard", "Dame", 1, 30),
+((select id from ssp_teams where name = "Portland Trailblazers"), 3, "CJ", "McCollum", null, 1, 25),
+((select id from ssp_teams where name = "Portland Trailblazers"), 31, "Seth", "Curry", null, 1, 5),
+((select id from ssp_teams where name = "Milwaukee Bucks"), 34, "Giannis", "Antetokounmpo", "The Greek Alphabet", 1, 40),
+((select id from ssp_teams where name = "Milwaukee Bucks"), 22, "Khris", "Middleton", null, 1, 20),
+((select id from ssp_teams where name = "Milwaukee Bucks"), 11, "Brook", "Lopez", null, 1, 15),
+((select id from ssp_teams where name = "Toronto Raptors"), 2, "Kawhi", "Leonard", "The Claw", 1, 32),
+((select id from ssp_teams where name = "Toronto Raptors"), 7, "Kyle", "Lowry", null , 1, 17),
+((select id from ssp_teams where name = "Toronto Raptors"), 33, "Marc", "Gasol", null, 1, 12);
+-- POSITIONS -- 
 INSERT INTO ssp_positions (name)
 VALUES
-("Point Guard"),
-("Center"),
 ("Right"),
-("Power Forward"),
+("Point Guard"),
 ("Shooting Guard"),
-("Small Forward");
+("Small Forward"),
+("Power Forward"),
+("Center");
 
 INSERT INTO ssp_players_positions (player_id, position_id)
 VALUES
-(7, 1), (1, 2), (2, 1),
-(3, 4), (3, 2), (4, 5),
-(4, 1), (5, 6), (6, 4),
-(6, 5), (6, 6);
+((select id from ssp_players WHERE fname = "Timothy" and lname = "McConnell"),
+    (select id from ssp_positions where name = "Point Guard")), 
+    
+((select id from ssp_players WHERE fname = "Shaquille" and lname = "O'Neal"),
+    (select id from ssp_positions where name = "Center")),
+    
+((select id from ssp_players WHERE fname = "Alex" and lname = "Caruso"),
+    (select id from ssp_positions where name = "Point Guard")),
+    
+((select id from ssp_players WHERE fname = "Tony" and lname = "Battie"),
+    (select id from ssp_positions where name = "Power Forward")),
+    
+((select id from ssp_players WHERE fname = "Tony" and lname = "Battie"),
+    (select id from ssp_positions where name = "Center")),
+    
+((select id from ssp_players WHERE fname = "Danny" and lname = "Ainge"),
+    (select id from ssp_positions where name = "Shooting Guard")),
+    
+((select id from ssp_players WHERE fname = "Danny" and lname = "Ainge"),
+    (select id from ssp_positions where name = "Point Guard")),
+    
+((select id from ssp_players WHERE fname = "Deng" and lname = "Adel"),
+    (select id from ssp_positions where name = "Small Forward")),
+    
+((select id from ssp_players WHERE fname = "Wilson" and lname = "Chandler"),
+    (select id from ssp_positions where name = "Power Forward")),
+    
+((select id from ssp_players WHERE fname = "Wilson" and lname = "Chandler"),
+    (select id from ssp_positions where name = "Shooting Guard")),
+    
+((select id from ssp_players WHERE fname = "Wilson" and lname = "Chandler"),
+    (select id from ssp_positions where name = "Small Forward")),
+    
+((select id from ssp_players WHERE fname = "Stephen" and lname = "Curry"),
+    (select id from ssp_positions where name = "Point Guard")),
+    
+((select id from ssp_players WHERE fname = "Damian" and lname = "Lillard"),
+    (select id from ssp_positions where name = "Point Guard")),
+    
+((select id from ssp_players WHERE fname = "Klay" and lname = "Thompson"),
+    (select id from ssp_positions where name = "Shooting Guard")),
+    
+((select id from ssp_players WHERE fname = "CJ" and lname = "McCollum"),
+    (select id from ssp_positions where name = "Shooting Guard")),
+    
+((select id from ssp_players WHERE fname = "Seth" and lname = "Curry"),
+    (select id from ssp_positions where name = "Point Guard")),
+    
+((select id from ssp_players WHERE fname = "Draymond" and lname = "Green"),
+    (select id from ssp_positions where name = "Power Forward"));
 
+-- GAMES -- 
 INSERT INTO ssp_games (play_date, location, winning_team, mvp, score_home, score_visit)
 VALUES
 ("2019-03-09", "Los Angelos", 0, NULL, 107, 120),
-("2019-02-10", "Philadelphia", 1, 6, 143, 120),
+("2019-02-10", "Philadelphia", 1, (SELECT id FROM ssp_players where fname = "Wilson" and lname = "Chandler" ), 143, 120),
 ("2019-01-23", "Boston", 1, NULL, 123, 103),
-("2018-12-16", "Cleveland", 0, 7, 105, 128);
+("2018-12-16", "Cleveland", 0, (SELECT id FROM ssp_players where fname = "Timothy" and lname = "McConnell" ), 105, 128),
+("2019-05-12", "Portland", 0,  (SELECT id FROM ssp_players where fname = "CJ" and lname = "McCollum" ), 100, 80),
+("2019-05-10", "Houston", 1,  (SELECT id FROM ssp_players where fname = "Stephen" and lname = "Curry" ), 90, 85);
 
-INSERT INTO ssp_games_teams (gid, tid)
+INSERT INTO ssp_games_teams (gid, tid, home_team)
 VALUES
-(1, 1), (1, 2),
-(2, 1), (2, 4),
-(3, 2), (3, 3),
-(4, 3), (4, 4);
+((SELECT id FROM ssp_games WHERE play_date = "2019-03-09" AND location = "Los Angelos"), 
+    (SELECT id FROM ssp_teams WHERE name = "Lakers" AND location = "Los Angelos"), 1), 
 
+((SELECT id FROM ssp_games WHERE play_date = "2019-03-09" AND location = "Los Angelos"), 
+    (SELECT id FROM ssp_teams WHERE name = "Celtics" AND location = "Boston"), 0),
+
+((SELECT id FROM ssp_games WHERE play_date = "2019-02-10" AND location = "Philadelphia"), 
+    (SELECT id FROM ssp_teams WHERE name = "Lakers" AND location = "Los Angelos"), 0),
+
+((SELECT id FROM ssp_games WHERE play_date = "2019-02-10" AND location = "Philadelphia"), 
+    (SELECT id FROM ssp_teams WHERE name = "76ers" AND location = "Philadelphia"), 1),
+
+((SELECT id FROM ssp_games WHERE play_date = "2019-01-23" AND location = "Boston"), 
+    (SELECT id FROM ssp_teams WHERE name = "Celtics" AND location = "Boston"), 1),
+
+((SELECT id FROM ssp_games WHERE play_date = "2019-01-23" AND location = "Boston"), 
+    (SELECT id FROM ssp_teams WHERE name = "Cavaliers" AND location = "Cleveland"), 0),
+
+((SELECT id FROM ssp_games WHERE play_date = "2018-12-16" AND location = "Cleveland"), 
+    (SELECT id FROM ssp_teams WHERE name = "Cavaliers" AND location = "Cleveland"), 1),
+
+((SELECT id FROM ssp_games WHERE play_date = "2018-12-16" AND location = "Cleveland"), 
+    (SELECT id FROM ssp_teams WHERE name = "76ers" AND location = "Philadelphia"), 0);
+
+
+-- MASCOTS -- 
 INSERT INTO ssp_mascots (name, animal, team_id)
 VALUES
-("Franklin", "dog", 4),
-("Kristofer Ackermann", "leprechan", 2),
-("Gus", "Sir C. C.", 3);
-
-
+("Franklin", "dog", (SELECT id FROM ssp_teams WHERE name = "76ers")),
+("Kristofer Ackermann", "leprechan", (SELECT id FROM ssp_teams WHERE name = "Celtics")),
+("Gus", "Sir C. C.", (SELECT id FROM ssp_teams WHERE name = "Cavaliers")),
+("Gary", "Thunder", (SELECT id FROM ssp_teams WHERE name = "Golden State Warriors")),
+("Tristan", "Blaze the Trail Cat", (SELECT id FROM ssp_teams WHERE name = "Portland Trailblazers"));
 
 

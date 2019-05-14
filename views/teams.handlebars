@@ -2,13 +2,34 @@
     <div>
         <p>Search for a Team</p>
         <form>
-            <input type="text" name="searchbar" defaultValue="Search...">
+            <input type="text" name="searchbar" value="Search...">
             <div class="button search-submit" onclick="search()">Search!</div> 
         </form>
+        <p>Search will filter results below!</p>
     </div>
     <div class="results">
         {{#each team}}
             {{> single-team}}
         {{/each}}
+    </div>
+    <div class="hidden">
+        <h2>New Team!</h2>
+        <form>
+            <label>Team Name</label>
+            <input type="text" name="team-name" value="Cavaliers">
+            <label>City</label>
+            <input type="text" name="team-location" value="Boston">
+            <label>Color Code</label>
+            <input type="text" name="team-color" value="#3f3f3f">
+            <label>Player List</label>
+            <input type="text" name="team-players" value="Shaquille O'Neal, Tony Battie, ...">
+        </form>
+    </div>
+    <div>
+        <h3>Update Coach Name</h3>
+        <form>
+            <label>New Coach Name</label>
+            <input type="text" name="coach-name" value="Tommy Winston">
+        </form>
     </div>
 </main>

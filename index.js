@@ -62,11 +62,28 @@ app.get('*.html', (req, res) => {
     res.render(send, data);
 });
 
+
 app.get('*.scss', (req, res) => {
     console.log("== CONNECTION -> Stylesheet");
     console.log("== Requested -> " + req.url);
     res.render(req.url);    
 });
+
+
+app.get('*.svg', (req, res) => {
+    console.log("== CONNECTION -> Icon");
+    console.log("== Requested -> " + req.url);
+    console.log("== Sending -> ./icons" + req.url);
+    console.log("== " + cwd);
+    res.sendFile(cwd + "/icons" + req.url);  
+});
+
+app.get('*.png', (req, res) => {
+    console.log("== CONNECTION -> Image");
+    console.log("== Requested -> " + req.url);
+    res.sendFile(cwd + "/imgs" + req.url);  
+});
+
 
 app.get('*', (req, res) => {
     console.log("== CONNECTION -> ERROR 404");

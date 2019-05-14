@@ -1,0 +1,17 @@
+<div class="game-row">
+    <h3>{{home}} VS {{visit}}</h3>
+    <ul>
+        <li>{{home}}</li>
+        <li>Score: {{h_score}}</li>
+    </ul>
+    <ul>
+        <li>{{visit}}</li>
+        <li>Score: {{v_score}}</li>
+    </ul>
+    <h4>Winner: {{winner}}</h4>
+    {{#if mvp}}
+        <h4>Most Valuable Player</h4>
+        <a href="player-detail.html">{{mvp.name}}</a>
+    {{/if}}
+    <div onclick="removeGame()">|Remove Game|</div>
+</div>
