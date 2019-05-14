@@ -1,34 +1,31 @@
 {
     "MRG": {
-        "date":"February 6th 2020",
-        "location": "Ancient Egypt",
-        "home":"Pathfinders",
-        "visit":"Jaxers"
+        "date":"March 3, 2019",
+        "location": "Los Angelos",
+        "home":"Lakers",
+        "visit":"Celtics"
     },
     "player": [
         {
-            "first_name": "Michael",
-            "last_name": "Scott",
+            "first_name": "Shaquille",
+            "last_name": "O'Neal",
             "team": "Lakers",
-            "jersey_num": "25",
-            "games": "2",
-            "points": "0",
+            "jersey_num": "34",
+            "games": "1207",
+            "points": "28606",
             "position": [
                 {
                     "position_name": "Center"
-                },
-                {
-                    "position_name": "Backboard"
                 }
             ]
         },
         {
-            "first_name": "Jamie",
-            "last_name": "Foxx",
-            "team": "Lakers",
-            "jersey_num": "12",
-            "games": "2",
-            "points": "100",
+            "first_name": "Tony",
+            "last_name": "Battie",
+            "team": "Celtics",
+            "jersey_num": "4",
+            "games": "837",
+            "points": "5106",
             "position": [
                 {
                     "position_name": "Point Guard"
@@ -36,15 +33,21 @@
             ]
         },
         {
-            "first_name": "Yolo",
-            "last_name": "McSweggins",
-            "team": "Swegilicious",
-            "jersey_num": "6",
-            "games": "5",
-            "points": "5000",
+            "first_name": "Wilson",
+            "last_name": "Chandler",
+            "team": "76ers",
+            "jersey_num": "22",
+            "games": "641",
+            "points": "8269",
             "position": [
                 {
-                    "position_name": "Elbow"
+                    "position_name": "Power Forward"
+                },
+                {
+                    "position_name": "Shooting Guard"
+                },
+                {
+                    "position_name": "Small Forward"
                 }
             ]
         }
@@ -53,38 +56,38 @@
     "team": [
         {
             "name": "Lakers",
-            "color": "#FFFFF0",
-            "coach": "Drake Rake"
+            "color": "#552084",
+            "coach": "Luke Walton"
         },
         {
-            "name": "McSwaggins",
-            "color": "#FF0000",
-            "coach": "Teemo"
+            "name": "Celtics",
+            "color": "#008853",
+            "coach": "Brad Stevens"
         },
         {
-            "name": "Not Placeholder",
-            "color": "#FEED00",
-            "coach": "Mi Chinkov"
+            "name": "Cavaliers",
+            "color": "#860038",
+            "coach": "Tyronn Lue"
         }
     ],
     "mascot": [
         {
-            "name": "Limmy the Lake",
-            "animal": "Lake",
-            "team": "Lakers",
-            "color": "#FFFFF0"
+            "name": "Franklin",
+            "animal": "dog",
+            "team": "76ers",
+            "color": "#006BB6"
         },
         {
-            "name": "Darius",
-            "animal": "Yordle",
-            "team": "McSwaggins",
-            "color": "#FF0000"
+            "name": "Kristofer",
+            "animal": "Ackermann",
+            "team": "Celtics",
+            "color": "#008853"
         },
         {
-            "name": "Stukov",
-            "animal": "scythe",
-            "team": "Not Placeholder",
-            "color": "#FEED00"
+            "name": "Gus",
+            "animal": "Sir C. C.",
+            "team": "Cavaliers",
+            "color": "#860038"
         }
     ]
 }
