@@ -1,31 +1,26 @@
-<!-- Script Goes Here -->
-<main>
-    <div>
-        <p>Search for a Player</p>
-        <form>
-            <input type="text" name="searchbar" value="Search...">
-            <div class="button search-submit" onclick="search()">Search!</div> 
-        </form>
-        <p>Search will filter results below!</p>
-    </div>
-    <div class="results">
-        {{#each player}}
-            {{> single-player}}
-        {{/each}}
-    </div>
-    <div class="hidden">
-        <h2>New Player!</h2>
-        <form>
-            <label>Name</label>
-            <input type="text" name="player-name" value="Wilson Chandler">
-            <label>Jersey Number</label>
-            <input type="number" name="player-jersey" value="22">
-            <label>Career Games</label>
-            <input type="number" name="player-games" value="0">
-            <label>Career Points</label>
-            <input type="number" name="player-points" value="0">
-            <label>Positions List</label>
-            <input type="text" name="player-positions" value="Point Guard, ...">
-        </form>
-    </div>
-</main>
+<div>
+    <form>
+        <input type="text" name="searchbar" value="Search Player">
+        <span class="button search-submit" onclick="search()">Search!</span> 
+    </form>
+</div>
+<div class="results row">
+    {{#each player}}
+        {{> single-player}}
+    {{/each}}
+</div>
+<div class="hidden">
+    <h2>New Player!</h2>
+    <form>
+        <label>Name</label>
+        <input type="text" name="player-name" value="Wilson Chandler">
+        <label>Jersey Number</label>
+        <input type="number" name="player-jersey" value="22">
+        <label>Career Games</label>
+        <input type="number" name="player-games" value="0">
+        <label>Career Points</label>
+        <input type="number" name="player-points" value="0">
+        <label>Positions List</label>
+        <input type="text" name="player-positions" value="Point Guard, ...">
+    </form>
+</div>

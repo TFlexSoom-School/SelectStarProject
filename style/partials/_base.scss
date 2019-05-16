@@ -1,0 +1,29 @@
+.footer{
+    background-color: #00000010;
+}
+
+hr{
+    border-top: 2px solid #00000020;
+    margin-bottom: 0px;
+}
+
+nav{
+    min-height: 60px;
+}
+
+main{
+    min-height: 1200px;
+}
+
+/* Media Queries */
+@media only screen and (max-height: 1100px){
+    main{
+        min-height: 860px;
+    }
+}
+
+@media only screen and (max-height: 800px){
+    main{
+        min-height: 600px;
+    }
+}

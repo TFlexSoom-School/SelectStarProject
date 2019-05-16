@@ -1,27 +1,22 @@
-<!-- Script Goes Here -->
-<main>
-    <div>
-        <p>Search for a Mascot</p>
-        <form>
-            <input type="text" name="searchbar" value="Search...">
-            <div class="button search-submit" onclick="search()">Search!</div> 
-        </form>
-        <p>Search will filter results below!</p>
-    </div>
-    <div class="results">
-        {{#each mascot}}
-            {{> single-mascot}}
-        {{/each}}
-    </div>
-    <div class="hidden">
-        <h2>New Mascot!</h2>
-        <form>
-            <label>Name</label>
-            <input type="text" name="mascot-name" value="Bear Grillz">
-            <label>Animal | Costume</label>
-            <input type="text" name="mascot-anim" value="Shark">
-            <label>Team Name</label>
-            <input type="text" name="mascot-team" value="Cavaliers">
-        </form>
-    </div>
-</main>
+<div>
+    <form>
+        <input type="text" name="searchbar" value="Search Mascots">
+        <span class="button search-submit" onclick="search()">Search!</span> 
+    </form>
+</div>
+<div class="results row">
+    {{#each mascot}}
+        {{> single-mascot}}
+    {{/each}}
+</div>
+<div class="hidden">
+    <h2>New Mascot!</h2>
+    <form>
+        <label>Name</label>
+        <input type="text" name="mascot-name" value="Bear Grillz">
+        <label>Animal | Costume</label>
+        <input type="text" name="mascot-anim" value="Shark">
+        <label>Team Name</label>
+        <input type="text" name="mascot-team" value="Cavaliers">
+    </form>
+</div>
