@@ -44,7 +44,7 @@ INNER JOIN ssp_teams on ssp_players.team_id = ssp_teams.id;
 SELECT * FROM ssp_positions;
 
 -- insert a position into the table
-INSERT INTO ssp_positions(id, name) VALUES (:insertPositionInt, ':positionName');
+INSERT INTO ssp_positions(name) VALUES (':positionName');
 
 
 
@@ -56,11 +56,18 @@ INSERT INTO ssp_positions(id, name) VALUES (:insertPositionInt, ':positionName')
 INSERT INTO ssp_players_positions (player_id, position_id)
 VALUES ((select id from ssp_players WHERE fname = 'insertFName' and lname = "insertLName"), (select id from ssp_positions where name = ':positionName'));
 
--- display position ID, name of position, first and last name of the player
-SELECT ssp_players_positions.position_id, ssp_positions.name, ssp_players.fname, ssp_players.lname
-FROM ssp_players_positions
+-- display the number of positions for a player and their respective first/last name
+SELECT COUNT(ssp_positions.name), ssp_players.fname, ssp_players.lname
+FROM ssp_players
+INNER JOIN ssp_players_positions on ssp_players.id = ssp_players_positions.player_id
 INNER JOIN ssp_positions on ssp_positions.id = ssp_players_positions.position_id
-INNER JOIN ssp_players on ssp_players.id = ssp_players_positions.player_id;
+GROUP BY ssp_players.id;
+
+SELECT ssp_positions.name
+FROM ssp_positions
+INNER JOIN ssp_players_positions ON ssp_positions.id = ssp_players_positions.position_id
+INNER JOIN ssp_players ON ssp_players.id = ssp_players_positions.player_id
+WHERE ssp_players.fname = ":insertFName" AND ssp_players.lname = ":insertLName";
 
 -- Mascot TABLE -------------------------------------------------------------------------------------------
 
