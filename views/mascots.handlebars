@@ -1,10 +1,5 @@
-<div>
-    <form>
-        <input type="text" name="searchbar" value="Search Mascots">
-        <span class="button search-submit" onclick="search()">Search!</span> 
-    </form>
-</div>
-<div class="results row">
+<h2>All Mascots</h2>
+<div class="all-mascots row">
     {{#each mascot}}
         {{> single-mascot}}
     {{/each}}

@@ -73,21 +73,18 @@
     "mascot": [
         {
             "name": "Franklin",
-            "animal": "dog",
-            "team": "76ers",
-            "color": "#006BB6"
+            "animal": "The dog",
+            "team": "76ers"
         },
         {
             "name": "Kristofer Ackermann",
-            "animal": "leprechan",
-            "team": "Celtics",
-            "color": "#008853"
+            "animal": "The leprechan",
+            "team": "Celtics"
         },
         {
             "name": "Gus",
             "animal": "Sir C. C.",
-            "team": "Cavaliers",
-            "color": "#860038"
+            "team": "Cavaliers"
         }
     ],
     "game": [
@@ -111,6 +108,26 @@
             "mvp": {
                 "name" : "Timothy McConnell"
             }
+        }
+    ],
+    "positions":[
+        {
+            "name": "Point Guard"
+        },
+        {
+            "name": "Power Forward"
+        },
+        {
+            "name": "Small Forward"
+        },
+        {
+            "name": "Center"
+        },
+        {
+            "name": "Right"
+        },
+        {
+            "name": "Shooting Guard"
         }
     ]
 }
