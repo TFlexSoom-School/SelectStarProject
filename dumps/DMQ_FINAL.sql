@@ -121,3 +121,14 @@ from ssp_games_teams
 Inner join ssp_teams a on ssp_games_teams.home_team = a.id
 Inner join ssp_teams b on ssp_games_teams.tid = b.id
 INNER JOIN ssp_games on ssp_games.id = ssp_games_teams.gid;
+
+-- display the most recent game details -> More can be added to this later on!
+SELECT g.play_date as "date", g.location as location, a.name as home, b.name as visit
+from ssp_games g
+INNER JOIN ssp_games_teams gta on g.id = gta.gid
+INNER JOIN ssp_games_teams gtb on g.id = gtb.gid
+Inner join ssp_teams a on a.id = gta.tid 
+Inner join ssp_teams b on b.id = gtb.tid
+WHERE gta.home_team = 1 AND gtb.home_team = 0
+ORDER BY g.play_date DESC
+LIMIT 1;
