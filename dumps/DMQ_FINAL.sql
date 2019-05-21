@@ -43,6 +43,17 @@ SELECT ssp_players.fname, ssp_players.lname, ssp_teams.name, ssp_teams.coach
 FROM ssp_players
 INNER JOIN ssp_teams on ssp_players.team_id = ssp_teams.id;
 
+-- Display all the fields except for id.
+SELECT pl.fname AS "first_name", pl.lname AS "last_name", pl.nickname AS "nickname",
+pl.games, pl.points, pl.jersey AS "jersey_num", t.name AS team FROM ssp_players pl
+LEFT JOIN ssp_teams t ON pl.team_id = t.id;
+
+-- Display all fields with fname or lname matching the player
+SELECT pl.fname AS "first_name", pl.lname AS "last_name", pl.nickname AS "nickname",
+pl.games, pl.points, pl.jersey AS "jersey_num", t.name AS teamName FROM ssp_players pl
+LEFT JOIN ssp_teams t ON pl.team_id = t.id
+WHERE pl.fname = ":val" OR pl.lname = ":val";
+
 -- POSITION TABLE -------------------------------------------------------------------------------------------
 
 -- show entire table

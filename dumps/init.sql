@@ -165,7 +165,7 @@ VALUES
 ((select id from ssp_teams where name = "Lakers"), 4, "Alex", "Caruso", NULL, 62, 365),
 ((select id from ssp_teams where name = "Celtics"), 4, "Tony", "Battie", NULL, 837, 5106),
 ((select id from ssp_teams where name = "Celtics"), 44, "Danny", "Ainge", NULL, 1024, 11983),
-((select id from ssp_teams where name = "Cavaleirs"), 32, "Deng", "Adel", NULL, 19, 32),
+(NULL, 32, "Deng", "Adel", NULL, 19, 32),
 ((select id from ssp_teams where name = "76ers"), 22, "Wilson", "Chandler", NULL, 641, 8269),
 ((select id from ssp_teams where name = "76ers"), 12, "Timothy", "McConnell", "T.J.", 314, 2010),
 ((select id from ssp_teams where name = "Golden State Warriors"), 30, "Stephen", "Curry", "Human Torch", 1, 33),
