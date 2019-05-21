@@ -320,6 +320,12 @@ ALTER TABLE `ssp_teams`
   MODIFY `id` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
+-- UNIQUE for table `ssp_positions`
+--
+ALTER TABLE `ssp_positions`
+  MODIFY `name` varchar(20) NOT NULL UNIQUE;
+
+--
 -- Constraints for dumped tables
 --
 
