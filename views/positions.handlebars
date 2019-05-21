@@ -1,4 +1,11 @@
-<div class="position-list">
+{{#if isPartial}}
+{{! While this does offer a multipurpose solution -- This should be deprecated later}}
+{{else}}
+<!-- Or you can use the src directory -->
+<!-- <script src="src/position_script.js" defer></script> --> 
+<script src="position_script.js" defer></script>
+<div id="position-list">
+{{/if}}
     {{#if positions}}
     <h2>Position List</h2>
     <ul>
@@ -8,4 +15,8 @@
     </ul>
     {{/if}}
     
+{{#if isPartial}}
+
+{{else}}
 </div>
+{{/if}}

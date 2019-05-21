@@ -56,8 +56,8 @@ WHERE pl.fname = ":val" OR pl.lname = ":val";
 
 -- POSITION TABLE -------------------------------------------------------------------------------------------
 
--- show entire table
-SELECT * FROM ssp_positions;
+-- show all names within positions.
+SELECT pos.name FROM ssp_positions pos;
 
 -- insert a position into the table
 INSERT INTO ssp_positions(name) VALUES (':positionName');

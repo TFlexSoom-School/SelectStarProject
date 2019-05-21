@@ -274,6 +274,26 @@ module.exports = (db) => {
         }
     });
 
+    router.get("/pos", (req, res) => {
+        var context = { positions: [], isPartial: true, layout: null};
+        db.pool.query(
+            "SELECT pos.name FROM ssp_positions pos;",
+            (err, results, fields) => {
+                if (err) {
+                    console.log("== Query ERROR");
+                    console.log(err);
+                    res.status(500).end();
+                } else {
+                    results.forEach((element) => {
+                        element.player = true;
+                        context.positions.push(element);
+
+                    });
+                    res.status(200).render("positions", context);
+                }
+            });
+    });
+
 
 
     return router;
