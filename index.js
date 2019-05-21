@@ -58,6 +58,13 @@ app.get('/', (req, res) => {
     res.render("index", data);
 });
 
+/* Private handlebars file for AJAX queries :P */
+app.get('results.html', (req, res) => {
+    console.log("== CONNECTION -> Attempted a bad file... that's a no");
+    console.log("== Prevented! -> " + req.url);
+    res.status(404).render("404");
+});
+
 app.get('*.html', (req, res) => {
     console.log("== CONNECTION -> REQUESTING " + req.url);
     var send = req.url.substring(1, req.url.lastIndexOf(".html"));
