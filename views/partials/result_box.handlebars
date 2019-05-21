@@ -1,0 +1,80 @@
+{{! Tristan Hilbert }}
+{{! 5/20/2019}}
+{{! The multipurpose results handlebars page}}
+{{! One module for all your results needs}}
+{{! -------------------------------------   }}
+
+{{#if game}}
+<div class="game-row row result-row">
+    <h3>{{home}} VS {{visit}}</h3>
+    <ul>
+        <li>{{home}}</li>
+        <li>Score: {{h_score}}</li>
+    </ul>
+    <ul>
+        <li>{{visit}}</li>
+        <li>Score: {{v_score}}</li>
+    </ul>
+    <h4>Winner: {{winner}}</h4>
+    {{#if mvp}}
+        <h4>Most Valuable Player</h4>
+        <a href="player-detail.html">{{mvp.name}}</a>
+    {{/if}}
+    {{#if remove}}
+    {{! TODO}}
+    <div class="removal" onclick="removeGame()">|Remove Game|</div>
+    {{/if}}
+</div>
+{{/if}}
+
+{{#if team}}
+<div class="team-box row team-row">
+    <h3>{{name}}</h3>
+    <ul>
+        <li>Location: {{loc}}</li>
+        <li>Color: {{color}}</li>
+        <li><span onclick="updateCoach({{name}})">Coach: {{coach}}</span></li>
+    </ul>
+    {{#if remove}}
+    {{! TODO}}
+    <div class="removal" onclick="removeTeam()">|Remove Team|</div>
+    {{/if}}
+</div>
+{{/if}}
+
+{{#if player}}
+<div class="player-box col-md-3 result-box">
+    <h3><a href="player-detail.html"> {{first_name}} {{last_name}}</a></h3>
+    <ul>
+        <li>Team: {{team}}</li>
+        <li>Jersey Number: {{jersey_num}}</li>
+        <li>Nickname: {{nickname}}</li>
+        <li>Games Played: {{games}}</li>
+        <li>Points Made: {{points}}</li>
+        <li> Plays Positions:
+        {{#each position}}
+            {{position_name}} |
+        {{/each}}
+        </li>
+    </ul>
+    {{#if remove}}
+    {{! TODO}}
+    <div class="removal" onclick="removePlayer()">|Remove Player|</div>
+    {{/if}}
+</div>
+{{/if}}
+
+{{#if mascott}}
+<div class="mascot-box  col-md-3 result-box">
+    <h3>{{animal}}</h3>
+    <ul>
+        <li>Team: {{team}}</li>
+        <!--<li>Color: {{color}}</li>-->
+        <li>Actor Name: {{name}}</li>
+    </ul>
+    {{#if remove}}
+    {{! TODO}}
+    <div class="removal" onclick="removeMascot()">|Remove Mascot|</div>
+    {{/if}}
+</div>
+{{/if}}

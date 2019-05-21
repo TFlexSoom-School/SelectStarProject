@@ -13,17 +13,17 @@
         <li>Home Team: <span fieldname="home">{{MRG.home}}</span></li>
         <li>Visiting Team: <span fieldname="visit">{{MRG.visit}}</span></li>
     </ul>
-    <div class="button" onclick="refresh_mrg">
+    <div class="button" onclick="refresh_mrg()">
         <p class="button-text">Refresh MRG</p>
     </div>
 </div>
 <div>
     <p>Search a Game or a Team</p>
-    <form>
+    <form id="gt-search" onsubmit="search()">
         <input type="text" name="searchbar" value="Search...">
         <span class="button search-submit" onclick="search()">Search!</span> 
     </form>
-    <div id="results row">
+    <div id="search-results" class="results row">
         <p>Results for Search will go here!</p>
     </div>
 </div>

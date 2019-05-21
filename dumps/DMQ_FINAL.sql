@@ -5,6 +5,11 @@
 -- Show entire table
 SELECT * FROM ssp_teams;
 
+-- Show table with the proper team name
+SELECT t.name, t.location AS loc, t.color, t.coach FROM ssp_teams t
+WHERE t.name = ":name";
+
+
 -- insert team info into table. color will be added from backend code using css (ex. FFF00 for yellow)
 INSERT INTO ssp_teams (name, location, color, coach)  
 VALUES (':teamName', ':teamLocation', ':teamColor', ':coachName');
@@ -132,3 +137,19 @@ Inner join ssp_teams b on b.id = gtb.tid
 WHERE gta.home_team = 1 AND gtb.home_team = 0
 ORDER BY g.play_date DESC
 LIMIT 1;
+
+-- display all game details with the associated team names
+SELECT g.play_date as "date", g.location as location, a.name as home, b.name as visit
+from ssp_games g
+INNER JOIN (
+    SELECT * FROM ssp_games_teams gt
+    WHERE gt.home_team = 1
+    ) AS gth on g.id = gth.gid
+INNER JOIN (
+    SELECT * FROM ssp_games_teams gt
+    WHERE gt.home_team = 0
+    ) AS gtv on g.id = gtv.gid
+INNER JOIN ssp_teams a on a.id = gth.tid
+INNER JOIN ssp_teams b on b.id = gtv.tid
+WHERE a.name = "Lakers" OR b.name = "Lakers"
+ORDER BY g.play_date DESC;
