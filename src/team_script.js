@@ -4,7 +4,7 @@
  *
  * 5/19/2019
  *
- * AJAX script for games page of Sports Stats Plus
+ * AJAX script for Teams page of Sports Stats Plus
  * 
  */
 
@@ -18,7 +18,7 @@ function search(){
         container.innerHTML = strHtml;
     }
 
-    var inputs = document.querySelectorAll("#ga-search input")
+    var inputs = document.querySelectorAll("#team-search input")
     var text = "";
     for(var i = 0; i < inputs.length; i ++){
         if(inputs[i].getAttribute("name") == "searchbar"){
@@ -26,14 +26,14 @@ function search(){
             break;
         }
     }
-    if(text != "" && text != "Search Games"){
+    if(text != "" && text != "Search Teams"){
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = () => {
             if(xhttp.readyState == 4 && xhttp.status == 200) {
                 appendResults(xhttp.responseText);
             }
         }
-        xhttp.open("GET", "/read/ga-"+ text, true);
+        xhttp.open("GET", "/read/team-"+ text, true);
         xhttp.send();
     }else{
         var xhttp = new XMLHttpRequest();
@@ -42,7 +42,7 @@ function search(){
                 appendResults(xhttp.responseText);
             }
         }
-        xhttp.open("GET", "/read/ga", true);
+        xhttp.open("GET", "/read/team", true);
         xhttp.send();
     }
 }
@@ -51,7 +51,7 @@ function search(){
 //console.log("== LOADED PLAYER_SCRIPT!");
 search();
 
-document.getElementById("ga-search").addEventListener('submit', (e) => {
+document.getElementById("team-search").addEventListener('submit', (e) => {
     search();
     e.preventDefault();
 }, false); 

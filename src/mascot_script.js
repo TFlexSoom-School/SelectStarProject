@@ -4,7 +4,7 @@
  *
  * 5/19/2019
  *
- * AJAX script for positions
+ * AJAX script for mascot page of Sports Stats Plus
  * 
  */
 
@@ -14,7 +14,7 @@
 
 function load(){
     function createPos(strHtml){
-        var container = document.getElementById("position-list");
+        var container = document.getElementById("mascot-list");
         container.innerHTML = strHtml;
         /*console.log(strHtml);*/
     }
@@ -25,9 +25,11 @@ function load(){
             createPos(xhttp.responseText);
         }
     }
-    xhttp.open("GET", "/read/pos", true);
+    xhttp.open("GET", "/read/ma", true);
     xhttp.send();
 }
 
 /* Script */
 load();
+
+/* TODO Remove buttons also need to load all entities */

@@ -97,7 +97,7 @@ WHERE animal = :insertCharacter;
 
 -- display the mascot's name, character and the team it belongs to 
 
-SELECT ssp_mascots.name, ssp_mascots.animal, ssp_teams.name
+SELECT ssp_mascots.name, ssp_mascots.animal, ssp_teams.name AS teamName
 FROM ssp_mascots
 INNER JOIN ssp_teams on ssp_mascots.team_id = ssp_teams.id;
 

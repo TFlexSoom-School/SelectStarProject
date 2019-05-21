@@ -64,10 +64,61 @@ module.exports = (db) => {
 
     }
 
+    function getGamesStar( context, res, next) {
+        db.pool.query(
+            "SELECT g.play_date as \"date\", g.location as location, a.name as home, b.name as visit " +
+            "from ssp_games g " +
+            "INNER JOIN ( " +
+            "    SELECT * FROM ssp_games_teams gt " +
+            "    WHERE gt.home_team = 1 " +
+            "    ) AS gth on g.id = gth.gid " +
+            "INNER JOIN ( " +
+            "    SELECT * FROM ssp_games_teams gt " +
+            "    WHERE gt.home_team = 0 " +
+            "    ) AS gtv on g.id = gtv.gid " +
+            "INNER JOIN ssp_teams a on a.id = gth.tid " +
+            "INNER JOIN ssp_teams b on b.id = gtv.tid " +
+            "ORDER BY g.play_date DESC;",
+            (err, results, fields) => {
+                if (err) {
+                    console.log("== Query ERROR");
+                    console.log(err);
+                    res.status(500).end();
+                } else {
+                    results.forEach((element) => {
+                        element.game = true;
+                        context.push(element);
+                    });
+                    next();
+                }
+            });
+
+    }
+
     function getTeamsName(name, context, res, next) {
         db.pool.query(
             "SELECT t.name, t.location AS loc, t.color, t.coach FROM ssp_teams t " +
             "WHERE t.name = \"" + name + "\"",
+            (err, results, fields) => {
+                if (err) {
+                    console.log("== Query ERROR");
+                    console.log(err);
+                    res.status(500).end();
+                } else {
+                    results.forEach((element) => {
+                        element.team = true;
+                        context.push(element);
+
+                    });
+                    next();
+                }
+            });
+
+    }
+
+    function getTeamsStar(context, res, next) {
+        db.pool.query(
+            "SELECT t.name, t.location AS loc, t.color, t.coach FROM ssp_teams t",
             (err, results, fields) => {
                 if (err) {
                     console.log("== Query ERROR");
@@ -285,11 +336,100 @@ module.exports = (db) => {
                     res.status(500).end();
                 } else {
                     results.forEach((element) => {
-                        element.player = true;
                         context.positions.push(element);
-
                     });
                     res.status(200).render("positions", context);
+                }
+            });
+    });
+
+    router.get("/ga", (req, res) => {
+        var context = { results: [] };
+        function next() {
+            /* override layout */
+            context.layout = null;
+            res.status(200).render("results", context);
+        }
+        getGamesStar(context.results, res, next);
+    });
+
+    router.get("/ga-:name", (req, res) => {
+        var name = req.params.name == null ? "" : req.params.name;
+        var context = { results: [] };
+        
+        name = sanitize(name);
+
+        if (name != "") {
+            function next() {
+                console.log("== Query Finished!");
+                console.log("== Sending Rendered HTML!");
+
+                /* override layout */
+                context.layout = null;
+
+                res.status(200).render("results", context);
+            }
+            getGames(name, context.results, res, next);
+
+        } else {
+            res.status(404).end();
+        }
+    });
+
+    router.get("/team", (req, res) => {
+        var context = { results: [] };
+        function next() {
+            /* override layout */
+            context.layout = null;
+            res.status(200).render("results", context);
+        }
+        getTeamsStar(context.results, res, next);
+    });
+
+    router.get("/team-:name", (req, res) => {
+        var name = req.params.name == null ? "" : req.params.name;
+        var context = { results: [] };
+        
+        name = sanitize(name);
+
+        if (name != "") {
+            function next() {
+                console.log("== Query Finished!");
+                console.log("== Sending Rendered HTML!");
+
+                /* override layout */
+                context.layout = null;
+
+                res.status(200).render("results", context);
+            }
+            getTeamsName(name, context.results, res, next);
+
+        } else {
+            res.status(404).end();
+        }
+    });
+
+    router.get("/ma", (req, res) => {
+        var context = { results: [] };
+        db.pool.query(
+            "SELECT ssp_mascots.name, ssp_mascots.animal, ssp_teams.name AS teamName " +
+            "FROM ssp_mascots " +
+            "INNER JOIN ssp_teams on ssp_mascots.team_id = ssp_teams.id;",
+            (err, results, fields) => {
+                if (err) {
+                    console.log("== Query ERROR");
+                    console.log(err);
+                    res.status(500).end();
+                } else {
+                    results.forEach((element) => {
+                        element.mascot = true;
+                        context.results.push(element);
+
+                    });
+
+                    context.layout = null;
+
+                    res.status(200).render("results", context);
                 }
             });
     });

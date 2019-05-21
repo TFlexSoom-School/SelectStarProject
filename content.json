@@ -9,7 +9,7 @@
         {
             "first_name": "Shaquille",
             "last_name": "O'Neal",
-            "team": "Lakers",
+            "teamName": "Lakers",
             "jersey_num": "34",
             "games": "1207",
             "points": "28606",
@@ -22,7 +22,7 @@
         {
             "first_name": "Tony",
             "last_name": "Battie",
-            "team": "Celtics",
+            "teamName": "Celtics",
             "jersey_num": "4",
             "games": "837",
             "points": "5106",
@@ -35,7 +35,7 @@
         {
             "first_name": "Wilson",
             "last_name": "Chandler",
-            "team": "76ers",
+            "teamName": "76ers",
             "jersey_num": "22",
             "games": "641",
             "points": "8269",
@@ -74,17 +74,17 @@
         {
             "name": "Franklin",
             "animal": "The dog",
-            "team": "76ers"
+            "teamName": "76ers"
         },
         {
             "name": "Kristofer Ackermann",
             "animal": "The leprechan",
-            "team": "Celtics"
+            "teamName": "Celtics"
         },
         {
             "name": "Gus",
             "animal": "Sir C. C.",
-            "team": "Cavaliers"
+            "teamName": "Cavaliers"
         }
     ],
     "game": [
