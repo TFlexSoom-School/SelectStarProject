@@ -19,6 +19,9 @@ const app = express();
 const sassComp = require("express-compile-sass");
 const handle = require("express-handlebars");
 
+/* Note this will not error out immediately if MySql does not connect */
+const db = require("./server_src/mysql.js")();
+
 /* Data for initial templates*/
 var data = require("./content.json");
 //console.log(JSON.stringify(data));
@@ -36,7 +39,9 @@ app.use(
     })
 )
 
-app.use(express.static(cwd));
+/* Correction - This is for security - Only for sass files */
+app.use(express.static(cwd + "/style"));
+app.use(express.static(cwd + "/src"));
 
 var PORT_NUM = 0;
 
@@ -46,13 +51,18 @@ if(process.env.PORT){
     PORT_NUM = 11777;
 }
 
-/* TODO Watch/Compile */
-
 /* ADD GET Rules */
 app.get('/', (req, res) => {
     console.log("== DIR -> SENDING DEFAULT ==");
     console.log("== CONNECTION -> SENDING index");
     res.render("index", data);
+});
+
+/* Private handlebars file for AJAX queries :P */
+app.get('results.html', (req, res) => {
+    console.log("== CONNECTION -> Attempted a bad file... that's a no");
+    console.log("== Prevented! -> " + req.url);
+    res.status(404).render("404");
 });
 
 app.get('*.html', (req, res) => {
@@ -84,11 +94,28 @@ app.get('*.png', (req, res) => {
     res.sendFile(cwd + "/imgs" + req.url);  
 });
 
+app.get('*.js', (req, res) => {
+    console.log("== CONNECTION -> Script");
+    console.log("== Requested -> " + req.url);
+    res.sendFile(cwd + "/src" + req.url);
+});
 
-app.get('*', (req, res) => {
+/* AJAX Scripts */
+
+app.use("/read", require("./server_src/read.js")(db));
+app.use("/create",require("./server_src/create.js")(db));
+
+/* Error Handling for other cases */
+
+app.use((req, res) => {
     console.log("== CONNECTION -> ERROR 404");
     console.log("== Big oof -> " + req.url);
     res.status(404).render("404");
+});
+
+app.use((err, req, res, next) => {
+    console.log(err.stack);
+    res.status(500).render("500");
 });
 
 /* LISTEN */

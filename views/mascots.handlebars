@@ -1,10 +1,8 @@
-<div>
-    <form>
-        <input type="text" name="searchbar" value="Search Mascots">
-        <span class="button search-submit" onclick="search()">Search!</span> 
-    </form>
-</div>
-<div class="results row">
+<!-- Or you can use the src directory -->
+<!-- <script src="src/mascot_script.js" defer></script> --> 
+<script src="mascot_script.js" defer></script>
+<h2>All Mascots</h2>
+<div id="mascot-list" class="all-mascots row">
     {{#each mascot}}
         {{> single-mascot}}
     {{/each}}

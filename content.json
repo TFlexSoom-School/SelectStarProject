@@ -1,6 +1,6 @@
 {
     "MRG": {
-        "date":"March 3, 2019",
+        "date":"February 222, 2019",
         "location": "Los Angelos",
         "home":"Lakers",
         "visit":"Celtics"
@@ -9,7 +9,7 @@
         {
             "first_name": "Shaquille",
             "last_name": "O'Neal",
-            "team": "Lakers",
+            "teamName": "Lakers",
             "jersey_num": "34",
             "games": "1207",
             "points": "28606",
@@ -22,7 +22,7 @@
         {
             "first_name": "Tony",
             "last_name": "Battie",
-            "team": "Celtics",
+            "teamName": "Celtics",
             "jersey_num": "4",
             "games": "837",
             "points": "5106",
@@ -35,7 +35,7 @@
         {
             "first_name": "Wilson",
             "last_name": "Chandler",
-            "team": "76ers",
+            "teamName": "76ers",
             "jersey_num": "22",
             "games": "641",
             "points": "8269",
@@ -73,21 +73,18 @@
     "mascot": [
         {
             "name": "Franklin",
-            "animal": "dog",
-            "team": "76ers",
-            "color": "#006BB6"
+            "animal": "The dog",
+            "teamName": "76ers"
         },
         {
             "name": "Kristofer Ackermann",
-            "animal": "leprechan",
-            "team": "Celtics",
-            "color": "#008853"
+            "animal": "The leprechan",
+            "teamName": "Celtics"
         },
         {
             "name": "Gus",
             "animal": "Sir C. C.",
-            "team": "Cavaliers",
-            "color": "#860038"
+            "teamName": "Cavaliers"
         }
     ],
     "game": [
@@ -111,6 +108,26 @@
             "mvp": {
                 "name" : "Timothy McConnell"
             }
+        }
+    ],
+    "positions":[
+        {
+            "name": "Point Guard"
+        },
+        {
+            "name": "Power Forward"
+        },
+        {
+            "name": "Small Forward"
+        },
+        {
+            "name": "Center"
+        },
+        {
+            "name": "Right"
+        },
+        {
+            "name": "NotAPositions"
         }
     ]
 }

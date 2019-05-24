@@ -38,7 +38,7 @@ CREATE TABLE ssp_players (
 
 CREATE TABLE ssp_positions (
     id int NOT NULL AUTO_INCREMENT,
-    name varchar(20) NOT NULL,
+    name varchar(20) NOT NULL UNIQUE,
     PRIMARY KEY (id)
 ) ENGINE=INNODB;
 
@@ -165,7 +165,7 @@ VALUES
 ((select id from ssp_teams where name = "Lakers"), 4, "Alex", "Caruso", NULL, 62, 365),
 ((select id from ssp_teams where name = "Celtics"), 4, "Tony", "Battie", NULL, 837, 5106),
 ((select id from ssp_teams where name = "Celtics"), 44, "Danny", "Ainge", NULL, 1024, 11983),
-((select id from ssp_teams where name = "Cavaleirs"), 32, "Deng", "Adel", NULL, 19, 32),
+(NULL, 32, "Deng", "Adel", NULL, 19, 32),
 ((select id from ssp_teams where name = "76ers"), 22, "Wilson", "Chandler", NULL, 641, 8269),
 ((select id from ssp_teams where name = "76ers"), 12, "Timothy", "McConnell", "T.J.", 314, 2010),
 ((select id from ssp_teams where name = "Golden State Warriors"), 30, "Stephen", "Curry", "Human Torch", 1, 33),
@@ -250,7 +250,7 @@ VALUES
 ("2019-02-10", "Philadelphia", 1, (SELECT id FROM ssp_players where fname = "Wilson" and lname = "Chandler" ), 143, 120),
 ("2019-01-23", "Boston", 1, NULL, 123, 103),
 ("2018-12-16", "Cleveland", 0, (SELECT id FROM ssp_players where fname = "Timothy" and lname = "McConnell" ), 105, 128),
-("2019-05-12", "Portland", 0,  (SELECT id FROM ssp_players where fname = "CJ" and lname = "McCollum" ), 100, 80),
+("2019-05-12", "Portland", 1,  (SELECT id FROM ssp_players where fname = "CJ" and lname = "McCollum" ), 100, 80),
 ("2019-05-10", "Houston", 1,  (SELECT id FROM ssp_players where fname = "Stephen" and lname = "Curry" ), 90, 85);
 
 INSERT INTO ssp_games_teams (gid, tid, home_team)

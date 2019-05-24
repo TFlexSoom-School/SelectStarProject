@@ -5,6 +5,11 @@
 -- Show entire table
 SELECT * FROM ssp_teams;
 
+-- Show table with the proper team name
+SELECT t.name, t.location AS loc, t.color, t.coach FROM ssp_teams t
+WHERE t.name = ":name";
+
+
 -- insert team info into table. color will be added from backend code using css (ex. FFF00 for yellow)
 INSERT INTO ssp_teams (name, location, color, coach)  
 VALUES (':teamName', ':teamLocation', ':teamColor', ':coachName');
@@ -38,13 +43,24 @@ SELECT ssp_players.fname, ssp_players.lname, ssp_teams.name, ssp_teams.coach
 FROM ssp_players
 INNER JOIN ssp_teams on ssp_players.team_id = ssp_teams.id;
 
+-- Display all the fields except for id.
+SELECT pl.fname AS "first_name", pl.lname AS "last_name", pl.nickname AS "nickname",
+pl.games, pl.points, pl.jersey AS "jersey_num", t.name AS team FROM ssp_players pl
+LEFT JOIN ssp_teams t ON pl.team_id = t.id;
+
+-- Display all fields with fname or lname matching the player
+SELECT pl.fname AS "first_name", pl.lname AS "last_name", pl.nickname AS "nickname",
+pl.games, pl.points, pl.jersey AS "jersey_num", t.name AS teamName FROM ssp_players pl
+LEFT JOIN ssp_teams t ON pl.team_id = t.id
+WHERE pl.fname = ":val" OR pl.lname = ":val";
+
 -- POSITION TABLE -------------------------------------------------------------------------------------------
 
--- show entire table
-SELECT * FROM ssp_positions;
+-- show all names within positions.
+SELECT pos.name FROM ssp_positions pos;
 
 -- insert a position into the table
-INSERT INTO ssp_positions(id, name) VALUES (:insertPositionInt, ':positionName');
+INSERT INTO ssp_positions(name) VALUES (':positionName');
 
 
 
@@ -56,11 +72,18 @@ INSERT INTO ssp_positions(id, name) VALUES (:insertPositionInt, ':positionName')
 INSERT INTO ssp_players_positions (player_id, position_id)
 VALUES ((select id from ssp_players WHERE fname = 'insertFName' and lname = "insertLName"), (select id from ssp_positions where name = ':positionName'));
 
--- display position ID, name of position, first and last name of the player
-SELECT ssp_players_positions.position_id, ssp_positions.name, ssp_players.fname, ssp_players.lname
-FROM ssp_players_positions
+-- display the number of positions for a player and their respective first/last name
+SELECT COUNT(ssp_positions.name), ssp_players.fname, ssp_players.lname
+FROM ssp_players
+INNER JOIN ssp_players_positions on ssp_players.id = ssp_players_positions.player_id
 INNER JOIN ssp_positions on ssp_positions.id = ssp_players_positions.position_id
-INNER JOIN ssp_players on ssp_players.id = ssp_players_positions.player_id;
+GROUP BY ssp_players.id;
+
+SELECT ssp_positions.name
+FROM ssp_positions
+INNER JOIN ssp_players_positions ON ssp_positions.id = ssp_players_positions.position_id
+INNER JOIN ssp_players ON ssp_players.id = ssp_players_positions.player_id
+WHERE ssp_players.fname = ":insertFName" AND ssp_players.lname = ":insertLName";
 
 -- Mascot TABLE -------------------------------------------------------------------------------------------
 
@@ -74,7 +97,7 @@ WHERE animal = :insertCharacter;
 
 -- display the mascot's name, character and the team it belongs to 
 
-SELECT ssp_mascots.name, ssp_mascots.animal, ssp_teams.name
+SELECT ssp_mascots.name, ssp_mascots.animal, ssp_teams.name AS teamName
 FROM ssp_mascots
 INNER JOIN ssp_teams on ssp_mascots.team_id = ssp_teams.id;
 
@@ -114,3 +137,30 @@ from ssp_games_teams
 Inner join ssp_teams a on ssp_games_teams.home_team = a.id
 Inner join ssp_teams b on ssp_games_teams.tid = b.id
 INNER JOIN ssp_games on ssp_games.id = ssp_games_teams.gid;
+
+-- display the most recent game details -> More can be added to this later on!
+SELECT g.play_date as "date", g.location as location, a.name as home, b.name as visit
+from ssp_games g
+INNER JOIN ssp_games_teams gta on g.id = gta.gid
+INNER JOIN ssp_games_teams gtb on g.id = gtb.gid
+Inner join ssp_teams a on a.id = gta.tid 
+Inner join ssp_teams b on b.id = gtb.tid
+WHERE gta.home_team = 1 AND gtb.home_team = 0
+ORDER BY g.play_date DESC
+LIMIT 1;
+
+-- display all game details with the associated team names
+SELECT g.play_date as "date", g.location as location, a.name as home, b.name as visit
+from ssp_games g
+INNER JOIN (
+    SELECT * FROM ssp_games_teams gt
+    WHERE gt.home_team = 1
+    ) AS gth on g.id = gth.gid
+INNER JOIN (
+    SELECT * FROM ssp_games_teams gt
+    WHERE gt.home_team = 0
+    ) AS gtv on g.id = gtv.gid
+INNER JOIN ssp_teams a on a.id = gth.tid
+INNER JOIN ssp_teams b on b.id = gtv.tid
+WHERE a.name = "Lakers" OR b.name = "Lakers"
+ORDER BY g.play_date DESC;

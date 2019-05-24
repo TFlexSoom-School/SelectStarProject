@@ -1,10 +1,14 @@
+<!-- Or you can use the src directory -->
+<!-- <script src="src/player_script.js" defer></script> --> 
+<script src="player_script.js" defer></script>
+
 <div>
-    <form>
+    <form id="pl-search" onsubmit="search()" onsearch="search()">
         <input type="text" name="searchbar" value="Search Player">
         <span class="button search-submit" onclick="search()">Search!</span> 
     </form>
 </div>
-<div class="results row">
+<div id="search-results" class="results row">
     {{#each player}}
         {{> single-player}}
     {{/each}}

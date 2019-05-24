@@ -11,7 +11,6 @@
 
 /* Function Definitions */
 
-/*
 function search(){
     function appendResults(strHtml){
         var container = document.getElementById("search-results");
@@ -46,16 +45,17 @@ function search(){
         xhttp.send();
     }
 }
-/* Script */
 
-/*
+/* Script */
+//console.log("== LOADED PLAYER_SCRIPT!");
+search();
 
 document.getElementById("pl-search").addEventListener('submit', (e) => {
     search();
     e.preventDefault();
 }, false); 
 
- */
+
 
 module.exports = function(){
     var express = require('express');
@@ -93,4 +93,3 @@ router.post('/', function(req, res){
 
 
 }
-

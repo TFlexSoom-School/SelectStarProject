@@ -1,16 +1,24 @@
 <div class="player-box col-md-3 result-box">
     <h3><a href="player-detail.html"> {{first_name}} {{last_name}}</a></h3>
     <ul>
-        <li>Team: {{team}}</li>
+        {{#if teamName}}
+        <li>Team: {{teamName}}</li>
+        {{else}}
+        <li>Team: NONE</li>
+        {{/if}}
         <li>Jersey Number: {{jersey_num}}</li>
+        {{#if nickname}}
         <li>Nickname: {{nickname}}</li>
+        {{/if}}
         <li>Games Played: {{games}}</li>
         <li>Points Made: {{points}}</li>
+        {{#if position}}
         <li> Plays Positions:
         {{#each position}}
             {{position_name}} |
         {{/each}}
         </li>
+        {{/if}}
     </ul>
     <div onclick="removePlayer()">|Remove Player|</div>
 </div>
