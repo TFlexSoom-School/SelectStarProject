@@ -13,9 +13,9 @@
         {{> single-player}}
     {{/each}}
 </div>
-<div class="hidden">
+<div class="player-form">
     <h2>New Player!</h2>
-    <form>
+    <form id="pl-insert">
         <label>Name</label>
         <input type="text" name="player-name" value="Wilson Chandler">
         <label>Jersey Number</label>
@@ -27,4 +27,5 @@
         <label>Positions List</label>
         <input type="text" name="player-positions" value="Point Guard, ...">
     </form>
+    <span class="button insert-submit" onclick="insertPlayer()">Submit!</span>
 </div>

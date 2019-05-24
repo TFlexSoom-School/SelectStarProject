@@ -39,6 +39,8 @@ app.use(
     })
 )
 
+app.use(express.json());
+
 /* Correction - This is for security - Only for sass files */
 app.use(express.static(cwd + "/style"));
 app.use(express.static(cwd + "/src"));
