@@ -106,6 +106,8 @@ app.get('*.js', (req, res) => {
 
 app.use("/read", require("./server_src/read.js")(db));
 app.use("/create",require("./server_src/create.js")(db));
+app.use("/update", require("./server_src/update.js")(db));
+//app.use("/delete",require("./server_src/delete.js")(db));
 
 /* Error Handling for other cases */
 

@@ -66,9 +66,9 @@ function insertPlayer(){
     inputObject.jersey = formInput["player-jersey"];
     inputObject.games = formInput["player-games"];
     inputObject.points = formInput["player-points"];
-    
-    /* TODO */
+
     /* Add functionality for Positions */
+    inputObject.positions = formInput["player-positions"].split(", ").filter((element) => element != "..." && element != "");
     
     /* Send http request */
     

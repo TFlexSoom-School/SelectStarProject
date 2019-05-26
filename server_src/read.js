@@ -13,22 +13,7 @@
 module.exports = (db) => {
     var express = require("express");
     var router = express.Router();
-
-    /* Util Functions */
-    function sanitize(field) {
-        /* INITIATE SANITIZATION */
-        var i = field.indexOf(";");
-        if (i != -1) {
-            field = field.substring(0, i);
-        }
-
-        /* Also want to verify no subqueries... that would suck */
-        i = field.indexOf("(");
-        if (i != -1) {
-            field = field.substring(0, i);
-        }
-        return field;
-    }
+    /* Function ->*/ var escape = require("mysql").escape;
 
     /* Query Functions */
 
@@ -46,8 +31,8 @@ module.exports = (db) => {
             "    ) AS gtv on g.id = gtv.gid " +
             "INNER JOIN ssp_teams a on a.id = gth.tid " +
             "INNER JOIN ssp_teams b on b.id = gtv.tid " +
-            "WHERE a.name = \"" + name + "\" OR b.name = \"" + name + "\" " +
-            "ORDER BY g.play_date DESC;",
+            "WHERE a.name = "+ escape(name) + " OR b.name =" + escape(name) +
+            " ORDER BY g.play_date DESC;",
             (err, results, fields) => {
                 if (err) {
                     console.log("== Query ERROR");
@@ -64,7 +49,7 @@ module.exports = (db) => {
 
     }
 
-    function getGamesStar( context, res, next) {
+    function getGamesStar(context, res, next) {
         db.pool.query(
             "SELECT g.play_date as \"date\", g.location as location, a.name as home, b.name as visit " +
             "from ssp_games g " +
@@ -98,7 +83,7 @@ module.exports = (db) => {
     function getTeamsName(name, context, res, next) {
         db.pool.query(
             "SELECT t.name, t.location AS loc, t.color, t.coach FROM ssp_teams t " +
-            "WHERE t.name = \"" + name + "\"",
+            "WHERE t.name =" + escape(name),
             (err, results, fields) => {
                 if (err) {
                     console.log("== Query ERROR");
@@ -140,7 +125,8 @@ module.exports = (db) => {
     function getPlayersStar(context, res, next) {
         db.pool.query(
             "SELECT pl.fname AS \"first_name\", pl.lname AS \"last_name\", pl.nickname AS \"nickname\", " +
-            "pl.games, pl.points, pl.jersey AS \"jersey_num\", t.name AS teamName FROM ssp_players pl " +
+            "pl.games, pl.points, pl.jersey AS \"jersey_num\", pl.id, " +
+            "t.name AS teamName FROM ssp_players pl " +
             "LEFT JOIN ssp_teams t ON pl.team_id = t.id;",
             (err, results, fields) => {
                 if (err) {
@@ -163,9 +149,10 @@ module.exports = (db) => {
     function getPlayersName(name, context, res, next) {
         db.pool.query(
             "SELECT pl.fname AS \"first_name\", pl.lname AS \"last_name\", pl.nickname AS \"nickname\", " +
-            "pl.games, pl.points, pl.jersey AS \"jersey_num\", t.name AS teamName FROM ssp_players pl " +
+            "pl.games, pl.points, pl.jersey AS \"jersey_num\", pl.id, " +
+            "t.name AS teamName FROM ssp_players pl " +
             "LEFT JOIN ssp_teams t ON pl.team_id = t.id " +
-            "WHERE pl.fname = \"" + name + "\" OR pl.lname = \"" + name + "\";",
+            "WHERE pl.fname =" + escape(name) + " OR pl.lname ="  + escape(name),
             (err, results, fields) => {
                 if (err) {
                     console.log("== Query ERROR");
@@ -192,9 +179,10 @@ module.exports = (db) => {
         var lname = name.substring(index + 1, name.length);
         db.pool.query(
             "SELECT pl.fname AS \"first_name\", pl.lname AS \"last_name\", pl.nickname AS \"nickname\", " +
-            "pl.games, pl.points, pl.jersey AS \"jersey_num\", t.name AS teamName FROM ssp_players pl " +
+            "pl.games, pl.points, pl.jersey AS \"jersey_num\", pl.id, " +
+            "t.name AS teamName FROM ssp_players pl " +
             "LEFT JOIN ssp_teams t ON pl.team_id = t.id " +
-            "WHERE pl.fname = \"" + fname + "\" OR pl.lname = \"" + lname + "\";",
+            "WHERE pl.fname =" + escape(fname) + "OR pl.lname = " + escape(lname),
             (err, results, fields) => {
                 if (err) {
                     console.log("== Query ERROR");
@@ -211,9 +199,10 @@ module.exports = (db) => {
             });
         db.pool.query(
             "SELECT pl.fname AS \"first_name\", pl.lname AS \"last_name\", pl.nickname AS \"nickname\", " +
-            "pl.games, pl.points, pl.jersey AS \"jersey_num\", t.name AS teamName FROM ssp_players pl " +
+            "pl.games, pl.points, pl.jersey AS \"jersey_num\", pl.id, " +
+            "t.name AS teamName FROM ssp_players pl " +
             "LEFT JOIN ssp_teams t ON pl.team_id = t.id " +
-            "WHERE pl.fname = \"" + lname + "\" OR pl.lname = \"" + fname + "\";",
+            "WHERE pl.fname =" + escape(lname) + " OR pl.lname = " + escape(fname),
             (err, results, fields) => {
                 if (err) {
                     console.log("== Query ERROR");
@@ -225,6 +214,28 @@ module.exports = (db) => {
                         context.push(element);
 
                     });
+                    next();
+                }
+            });
+    }
+
+    /* TODO Add positions */
+    /* TODO make more modular -- # of spaces = number of nexts required */
+    function getPlayersId(id, context, res, next) {
+        db.pool.query(
+            "SELECT pl.fname AS \"first_name\", pl.lname AS \"last_name\", pl.nickname AS \"nickname\", " +
+            "pl.games, pl.points, pl.jersey AS \"jersey_num\", pl.id, " +
+            "t.name AS teamName FROM ssp_players pl " +
+            "LEFT JOIN ssp_teams t ON pl.team_id = t.id " +
+            "WHERE pl.id = ? LIMIT 1", 
+            [id],
+            (err, results, fields) => {
+                if (err) {
+                    console.log("== Query ERROR");
+                    console.log(err);
+                    res.status(500).end();
+                } else {
+                    context.push(results[0]);
                     next();
                 }
             });
@@ -255,37 +266,21 @@ module.exports = (db) => {
     });
 
     router.get("/gt-:name", (req, res) => {
-        /* SO THIS IS WHERE SANITIZATION BECOMES IMPORTANT */
-        /* either
-        * Run through a structured protocol so sql injections aren't possible (TODO)
-        * or
-        * Check for bad characters (';' especially) */
         var name = req.params.name == null ? "" : req.params.name;
         var context = { results: [] };
+        var queries = 0;
+        function next() {
+            queries++;
+            if (queries >= 2) {
 
-        name = sanitize(name);
+                /* override layout */
+                context.layout = null;
 
-        if (name != "") {
-            /* Sanitization complete -- Feel free to add on! */
-            var queries = 0;
-            function next() {
-                console.log("== Query Finished!");
-                queries++;
-                if (queries >= 2) {
-                    console.log("== Sending Rendered HTML!");
-
-                    /* override layout */
-                    context.layout = null;
-
-                    res.status(200).render("results", context);
-                }
+                res.status(200).render("results", context);
             }
-            getTeamsName(name, context.results, res, next);
-            getGames(name, context.results, res, next);
-
-        } else {
-            res.status(404).end();
         }
+        getTeamsName(name, context.results, res, next);
+        getGames(name, context.results, res, next);
     });
 
     router.get("/pl", (req, res) => {
@@ -301,28 +296,18 @@ module.exports = (db) => {
     router.get("/pl-:name", (req, res) => {
         var name = req.params.name == null ? "" : req.params.name;
         var context = { results: [] };
-        
-        name = sanitize(name);
+        var queries = 0;
+        function next() {
+            queries++;
+            if (queries >= 3) {
 
-        if (name != "") {
-            var queries = 0;
-            function next() {
-                console.log("== Query Finished!");
-                queries++;
-                if (queries >= 3) {
-                    console.log("== Sending Rendered HTML!");
+                /* override layout */
+                context.layout = null;
 
-                    /* override layout */
-                    context.layout = null;
-
-                    res.status(200).render("results", context);
-                }
+                res.status(200).render("results", context);
             }
-            getPlayersName(name, context.results, res, next);
-
-        } else {
-            res.status(404).end();
         }
+        getPlayersName(name, context.results, res, next);
     });
 
     router.get("/pos", (req, res) => {
@@ -356,24 +341,14 @@ module.exports = (db) => {
     router.get("/ga-:name", (req, res) => {
         var name = req.params.name == null ? "" : req.params.name;
         var context = { results: [] };
-        
-        name = sanitize(name);
+        function next() {
 
-        if (name != "") {
-            function next() {
-                console.log("== Query Finished!");
-                console.log("== Sending Rendered HTML!");
+            /* override layout */
+            context.layout = null;
 
-                /* override layout */
-                context.layout = null;
-
-                res.status(200).render("results", context);
-            }
-            getGames(name, context.results, res, next);
-
-        } else {
-            res.status(404).end();
+            res.status(200).render("results", context);
         }
+        getGames(name, context.results, res, next);
     });
 
     router.get("/team", (req, res) => {
@@ -389,24 +364,14 @@ module.exports = (db) => {
     router.get("/team-:name", (req, res) => {
         var name = req.params.name == null ? "" : req.params.name;
         var context = { results: [] };
-        
-        name = sanitize(name);
+        function next() {
 
-        if (name != "") {
-            function next() {
-                console.log("== Query Finished!");
-                console.log("== Sending Rendered HTML!");
+            /* override layout */
+            context.layout = null;
 
-                /* override layout */
-                context.layout = null;
-
-                res.status(200).render("results", context);
-            }
-            getTeamsName(name, context.results, res, next);
-
-        } else {
-            res.status(404).end();
+            res.status(200).render("results", context);
         }
+        getTeamsName(name, context.results, res, next);
     });
 
     router.get("/ma", (req, res) => {
@@ -434,7 +399,13 @@ module.exports = (db) => {
             });
     });
 
-
+    router.get("/pl-detail/:id", (req, res) => {
+        var results = [];
+        function next(){
+            res.status(200).location("/").render("player-detail", results[0]);
+        }
+        getPlayersId(req.params.id, results, res, next);
+    });
 
     return router;
 };

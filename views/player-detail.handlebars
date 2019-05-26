@@ -1,9 +1,46 @@
+<script src="/detail_player_script.js" defer></script>
 <h1>PLAYER DETAILS</h1>
-<p>Player Details Here!</p>
-<div class="position-remove-button" onclick="removePosition()"></div>
+
+<div class="player-box row result-box">
+    <h3>
+        {{#if id}}
+        <a href="/read/pl-detail/{{id}}"> 
+            {{first_name}} {{last_name}}
+        </a>
+        {{else}}
+            {{first_name}} {{last_name}}
+        {{/if}}
+    </h3>
+    <ul>
+        {{#if teamName}}
+        <li>Team: {{teamName}}</li>
+        {{else}}
+        <li>Team: NONE</li>
+        {{/if}}
+        <li>Jersey Number: {{jersey_num}}</li>
+        {{#if nickname}}
+        <li>Nickname: {{nickname}}</li>
+        {{/if}}
+        <li>Games Played: {{games}}</li>
+        <li>Points Made: {{points}}</li>
+        {{#if position}}
+        <li> Plays Positions:
+        {{#each position}}
+            {{position_name}} |
+        {{/each}}
+        </li>
+        {{/if}}
+    </ul>
+    {{#if id}}
+    <div class="removal" onclick="removePlayer({{id}})">|Remove Player|</div>
+    {{/if}}
+</div>
+
+
 <div class="position-update form">
     <h2>Add a position</h2>
-    <form>
+    <form id="position-change">
         <input type="text" name="position-name" value="Point Guard">
     </form>
+    <div id="position-change-button" class="button" onclick="updatePosition({{id}})">|Update!|</div>
 </div>

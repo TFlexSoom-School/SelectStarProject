@@ -70,7 +70,14 @@ INSERT INTO ssp_positions(name) VALUES (':positionName');
 
 -- insert a player into the table 
 INSERT INTO ssp_players_positions (player_id, position_id)
-VALUES ((select id from ssp_players WHERE fname = 'insertFName' and lname = "insertLName"), (select id from ssp_positions where name = ':positionName'));
+VALUES (
+    (SELECT p.id FROM ssp_players p 
+    WHERE p.fname = ":fname" AND p.lname = ":lname" 
+    ORDER BY p.id DESC 
+    LIMIT 1
+    ),
+    (SELECT pos.id FROM ssp_positions pos WHERE pos.name = ?)
+)
 
 -- display the number of positions for a player and their respective first/last name
 SELECT COUNT(ssp_positions.name), ssp_players.fname, ssp_players.lname
