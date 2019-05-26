@@ -47,11 +47,48 @@ function search(){
     }
 }
 
-/* Script */
-//console.log("== LOADED PLAYER_SCRIPT!");
+
+function insertTeam(){
+
+    var inputs = document.querySelectorAll("#team-insert input")
+    var formInput = {};
+    for(var i = 0; i < inputs.length; i ++){
+        formInput[inputs[i].getAttribute("name")] = inputs[i].value;
+    }
+
+
+
+   inputObject = {};
+
+   inputObject.name = formInput["team-name"]; 
+   inputObject.location = formInput["team-loc"];       /* add required fields */
+   inputObject.color = formInput["team-color"];  /* add length requirement */
+   inputObject.coach = formInput["coach-name"];
+
+
+    
+    /* Send http request */
+    
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = () => {
+        if(xhttp.readyState == 4 && xhttp.status == 200) {
+            window.location.replace("/teams.html");
+        }
+    }
+    xhttp.open("POST", "/create/team", true);
+    xhttp.setRequestHeader("Content-Type", "application/json");
+    xhttp.send(JSON.stringify(inputObject));
+}
+
+
 search();
 
 document.getElementById("team-search").addEventListener('submit', (e) => {
     search();
+    e.preventDefault();
+}, false); 
+
+document.getElementById("team-insert").addEventListener('submit', (e) => {
+    insertTeam();
     e.preventDefault();
 }, false); 
