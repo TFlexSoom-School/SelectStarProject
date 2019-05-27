@@ -32,6 +32,7 @@ module.exports = (db) => {
     */
     
     router.post('/player', function(req, res){
+        console.log(req.body);
         var sql = "INSERT INTO ssp_players (fname, lname, jersey, games, points) VALUES (?,?,?,?,?)";
         var inserts = [req.body.fname, req.body.lname, req.body.jersey, req.body.games,req.body.points];
         db.pool.query(sql,inserts,function(error, results, fields){
@@ -40,23 +41,11 @@ module.exports = (db) => {
                 res.write(JSON.stringify(error));
                 res.status(500).end();
             }else{
-                
-                sql = "INSERT INTO ssp_players_positions (player_id, position_id) " +
-                "VALUES ((SELECT p.id FROM ssp_players p WHERE p.fname = ? AND p.lname = ? ORDER BY p.id DESC LIMIT 1), " +
-                "(SELECT pos.id FROM ssp_positions pos WHERE pos.name = ?))";
-                req.body.positions.forEach((element) => {
-                    inserts = [req.body.fname, req.body.lname, element];
-                    db.pool.query(sql, inserts, (error, results, fields) => {
-                        if(error){
-                            console.log(error)
-                        }
-                        console.log("== Query done!")
-                    });
-                });
                 res.status(200).end();
             }
         });
     });
+
     router.post('/team', function(req, res){
         console.log(req.body);
         var sql = "INSERT INTO ssp_teams (name, location, color, coach) VALUES (?,?,?,?)";
@@ -72,6 +61,8 @@ module.exports = (db) => {
         });
 
     });
+
+
 
 
 
