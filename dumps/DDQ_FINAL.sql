@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: classmysql.engr.oregonstate.edu:3306
--- Generation Time: May 13, 2019 at 07:55 PM
+-- Generation Time: May 26, 2019 at 06:05 PM
 -- Server version: 10.3.13-MariaDB-log
 -- PHP Version: 7.0.33
 
@@ -47,7 +47,7 @@ INSERT INTO `ssp_games` (`id`, `play_date`, `location`, `winning_team`, `mvp`, `
 (2, '2019-02-10', 'Philadelphia', 1, 6, 143, 120),
 (3, '2019-01-23', 'Boston', 1, NULL, 123, 103),
 (4, '2018-12-16', 'Cleveland', 0, 7, 105, 128),
-(5, '2019-05-12', 'Portland', 0, 12, 100, 80),
+(5, '2019-05-12', 'Portland', 1, 12, 100, 80),
 (6, '2019-05-10', 'Houston', 1, 8, 90, 85);
 
 -- --------------------------------------------------------
@@ -122,11 +122,11 @@ CREATE TABLE `ssp_players` (
 --
 
 INSERT INTO `ssp_players` (`id`, `team_id`, `jersey`, `fname`, `lname`, `nickname`, `games`, `points`) VALUES
-(1, 1, 34, 'Shaquille', 'O\'Neal', 'Shaq', 1207, 28606),
+(1, NULL, 34, 'Shaquille', 'O\'Neal', 'Shaq', 1207, 28606),
 (2, 1, 4, 'Alex', 'Caruso', NULL, 62, 365),
 (3, 2, 4, 'Tony', 'Battie', NULL, 837, 5106),
 (4, 2, 44, 'Danny', 'Ainge', NULL, 1024, 11983),
-(5, NULL, 32, 'Deng', 'Adel', NULL, 19, 32),
+(5, 3, 32, 'Deng', 'Adel', NULL, 19, 32),
 (6, 4, 22, 'Wilson', 'Chandler', NULL, 641, 8269),
 (7, 4, 12, 'Timothy', 'McConnell', 'T.J.', 314, 2010),
 (8, 5, 30, 'Stephen', 'Curry', 'Human Torch', 1, 33),
@@ -192,12 +192,12 @@ CREATE TABLE `ssp_positions` (
 --
 
 INSERT INTO `ssp_positions` (`id`, `name`) VALUES
-(1, 'Right'),
+(6, 'Center'),
 (2, 'Point Guard'),
-(3, 'Shooting Guard'),
-(4, 'Small Forward'),
 (5, 'Power Forward'),
-(6, 'Center');
+(1, 'Right'),
+(3, 'Shooting Guard'),
+(4, 'Small Forward');
 
 -- --------------------------------------------------------
 
@@ -218,10 +218,10 @@ CREATE TABLE `ssp_teams` (
 --
 
 INSERT INTO `ssp_teams` (`id`, `name`, `location`, `color`, `coach`) VALUES
-(1, 'Lakers', 'Los Angelos', '552084', 'Luke Walton'),
-(2, 'Celtics', 'Boston', '008853', 'Brad Stevens'),
-(3, 'Cavaliers', 'Cleveland', '860038', 'Tyronn Lue'),
-(4, '76ers', 'Philadelphia', '006BB6', 'Brett Brown'),
+(1, 'Los Angelos Lakers', 'Los Angelos, CA', '552084', 'Luke Walton'),
+(2, 'Boston Celtics', 'Boston, MA', '008853', 'Brad Stevens'),
+(3, 'Cleveland Cavaliers', 'Cleveland, OH', '860038', 'Tyronn Lue'),
+(4, 'Philadelphia 76ers', 'Philadelphia, PA', '006BB6', 'Brett Brown'),
 (5, 'Golden State Warriors', 'Oakland, CA', 'FFF00', 'Steve Kerr'),
 (6, 'Portland Trailblazers', 'Portland, OR', 'FF0000', 'Terry Stotts'),
 (7, 'Milwaukee Bucks', 'Milwaukee, WI', '008000', 'Mike Budenholzer'),
@@ -273,7 +273,8 @@ ALTER TABLE `ssp_players_positions`
 -- Indexes for table `ssp_positions`
 --
 ALTER TABLE `ssp_positions`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
 
 --
 -- Indexes for table `ssp_teams`
@@ -318,12 +319,6 @@ ALTER TABLE `ssp_positions`
 --
 ALTER TABLE `ssp_teams`
   MODIFY `id` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- UNIQUE for table `ssp_positions`
---
-ALTER TABLE `ssp_positions`
-  MODIFY `name` varchar(20) NOT NULL UNIQUE;
 
 --
 -- Constraints for dumped tables

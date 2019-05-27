@@ -161,13 +161,13 @@ VALUES
 
 INSERT INTO ssp_players (team_id, jersey, fname, lname, nickname, games, points)
 VALUES
-((select id from ssp_teams where name = "Lakers"), 34, "Shaquille", "O'Neal", "Shaq", 1207, 28606),
-((select id from ssp_teams where name = "Lakers"), 4, "Alex", "Caruso", NULL, 62, 365),
-((select id from ssp_teams where name = "Celtics"), 4, "Tony", "Battie", NULL, 837, 5106),
-((select id from ssp_teams where name = "Celtics"), 44, "Danny", "Ainge", NULL, 1024, 11983),
-(NULL, 32, "Deng", "Adel", NULL, 19, 32),
-((select id from ssp_teams where name = "76ers"), 22, "Wilson", "Chandler", NULL, 641, 8269),
-((select id from ssp_teams where name = "76ers"), 12, "Timothy", "McConnell", "T.J.", 314, 2010),
+(NULL, 34, "Shaquille", "O'Neal", "Shaq", 1207, 28606),
+((select id from ssp_teams where name = "Los Angelos Lakers"), 4, "Alex", "Caruso", NULL, 62, 365),
+((select id from ssp_teams where name = "Boston Celtics"), 4, "Tony", "Battie", NULL, 837, 5106),
+((select id from ssp_teams where name = "Boston Celtics"), 44, "Danny", "Ainge", NULL, 1024, 11983),
+((select id from ssp_teams where name = "Cleveland Cavaliers"), 32, "Deng", "Adel", NULL, 19, 32),
+((select id from ssp_teams where name = "Philadelphia 76ers"), 22, "Wilson", "Chandler", NULL, 641, 8269),
+((select id from ssp_teams where name = "Philadelphia 76ers"), 12, "Timothy", "McConnell", "T.J.", 314, 2010),
 ((select id from ssp_teams where name = "Golden State Warriors"), 30, "Stephen", "Curry", "Human Torch", 1, 33),
 ((select id from ssp_teams where name = "Golden State Warriors"), 11, "Klay", "Thompson", null, 1, 20),
 ((select id from ssp_teams where name = "Golden State Warriors"), 23, "Draymond", "Green", "Dray", 1, 10),
@@ -256,37 +256,37 @@ VALUES
 INSERT INTO ssp_games_teams (gid, tid, home_team)
 VALUES
 ((SELECT id FROM ssp_games WHERE play_date = "2019-03-09" AND location = "Los Angelos"), 
-    (SELECT id FROM ssp_teams WHERE name = "Los Angelos Lakers" AND location = "Los Angelos"), 1), 
+    (SELECT id FROM ssp_teams WHERE name = "Los Angelos Lakers" AND location = "Los Angelos, CA"), 1), 
 
 ((SELECT id FROM ssp_games WHERE play_date = "2019-03-09" AND location = "Los Angelos"), 
-    (SELECT id FROM ssp_teams WHERE name = "Boston Celtics" AND location = "Boston"), 0),
+    (SELECT id FROM ssp_teams WHERE name = "Boston Celtics" AND location = "Boston, MA"), 0),
 
 ((SELECT id FROM ssp_games WHERE play_date = "2019-02-10" AND location = "Philadelphia"), 
-    (SELECT id FROM ssp_teams WHERE name = "Los Angelos Lakers" AND location = "Los Angelos"), 0),
+    (SELECT id FROM ssp_teams WHERE name = "Los Angelos Lakers" AND location = "Los Angelos, CA"), 0),
 
 ((SELECT id FROM ssp_games WHERE play_date = "2019-02-10" AND location = "Philadelphia"), 
-    (SELECT id FROM ssp_teams WHERE name = "Philadelphia 76ers" AND location = "Philadelphia"), 1),
+    (SELECT id FROM ssp_teams WHERE name = "Philadelphia 76ers" AND location = "Philadelphia, PA"), 1),
 
 ((SELECT id FROM ssp_games WHERE play_date = "2019-01-23" AND location = "Boston"), 
-    (SELECT id FROM ssp_teams WHERE name = "Boston Celtics" AND location = "Boston"), 1),
+    (SELECT id FROM ssp_teams WHERE name = "Boston Celtics" AND location = "Boston, MA"), 1),
 
 ((SELECT id FROM ssp_games WHERE play_date = "2019-01-23" AND location = "Boston"), 
-    (SELECT id FROM ssp_teams WHERE name = "Cleveland Cavaliers" AND location = "Cleveland"), 0),
+    (SELECT id FROM ssp_teams WHERE name = "Cleveland Cavaliers" AND location = "Cleveland, OH"), 0),
 
 ((SELECT id FROM ssp_games WHERE play_date = "2018-12-16" AND location = "Cleveland"), 
-    (SELECT id FROM ssp_teams WHERE name = "Cleveland Cavaliers" AND location = "Cleveland"), 1),
+    (SELECT id FROM ssp_teams WHERE name = "Cleveland Cavaliers" AND location = "Cleveland, OH"), 1),
 
 ((SELECT id FROM ssp_games WHERE play_date = "2018-12-16" AND location = "Cleveland"), 
-    (SELECT id FROM ssp_teams WHERE name = "Philadelphia 76ers" AND location = "Philadelphia"), 0);
+    (SELECT id FROM ssp_teams WHERE name = "Philadelphia 76ers" AND location = "Philadelphia, PA"), 0);
 
 
 -- MASCOTS -- 
 INSERT INTO ssp_mascots (name, animal, team_id)
 VALUES
-("Franklin", "dog", (SELECT id FROM ssp_teams WHERE name = "76ers")),
-("Kristofer Ackermann", "leprechan", (SELECT id FROM ssp_teams WHERE name = "Celtics")),
-("Gus", "Sir C. C.", (SELECT id FROM ssp_teams WHERE name = "Cavaliers")),
-("Gary", "Thunder", (SELECT id FROM ssp_teams WHERE name = "Golden State Warriors")),
-("Tristan", "Blaze the Trail Cat", (SELECT id FROM ssp_teams WHERE name = "Portland Trailblazers"));
+("Franklin", "dog", (SELECT id FROM ssp_teams WHERE name = "Philadelphia 76ers" AND location = "Philadelphia, PA")),
+("Kristofer Ackermann", "leprechan", (SELECT id FROM ssp_teams WHERE name = "Boston Celtics" AND location = "Boston, MA")),
+("Gus", "Sir C. C.", (SELECT id FROM ssp_teams WHERE name = "Cleveland Cavaliers" AND location = "Cleveland, OH")),
+("Gary", "Thunder", (SELECT id FROM ssp_teams WHERE name = "Golden State Warriors" AND location = "Oakland, CA")),
+("Tristan", "Blaze the Trail Cat", (SELECT id FROM ssp_teams WHERE name = "Portland Trailblazers" AND location = "Portland, OR"));
 
 
