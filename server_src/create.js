@@ -13,10 +13,6 @@
 module.exports = (db) => {
     var express = require("express");
     var router = express.Router();
-
-    router.post("/mrg", (req,res) => {
-        res.status(200).send("OK");
-    });
     
     /*
     function getPlayers(res, mysql, context, complete){

@@ -148,10 +148,10 @@ ALTER TABLE ssp_mascots
 
 INSERT INTO ssp_teams (name, location, color, coach)
 VALUES 
-("Lakers", "Los Angelos", "552084", "Luke Walton"),
-("Celtics", "Boston", "008853", "Brad Stevens"),
-("Cavaliers", "Cleveland", "860038", "Tyronn Lue"),
-("76ers", "Philadelphia", "006BB6", "Brett Brown"),
+("Los Angelos Lakers", "Los Angelos, CA", "552084", "Luke Walton"),
+("Boston Celtics", "Boston, MA", "008853", "Brad Stevens"),
+("Cleveland Cavaliers", "Cleveland, OH", "860038", "Tyronn Lue"),
+("Philadelphia 76ers", "Philadelphia, PA", "006BB6", "Brett Brown"),
 ("Golden State Warriors", "Oakland, CA", "FFF00", "Steve Kerr"),
 ("Portland Trailblazers", "Portland, OR", "FF0000", "Terry Stotts"),
 ("Milwaukee Bucks", "Milwaukee, WI", "008000", "Mike Budenholzer"),
@@ -256,28 +256,28 @@ VALUES
 INSERT INTO ssp_games_teams (gid, tid, home_team)
 VALUES
 ((SELECT id FROM ssp_games WHERE play_date = "2019-03-09" AND location = "Los Angelos"), 
-    (SELECT id FROM ssp_teams WHERE name = "Lakers" AND location = "Los Angelos"), 1), 
+    (SELECT id FROM ssp_teams WHERE name = "Los Angelos Lakers" AND location = "Los Angelos"), 1), 
 
 ((SELECT id FROM ssp_games WHERE play_date = "2019-03-09" AND location = "Los Angelos"), 
-    (SELECT id FROM ssp_teams WHERE name = "Celtics" AND location = "Boston"), 0),
+    (SELECT id FROM ssp_teams WHERE name = "Boston Celtics" AND location = "Boston"), 0),
 
 ((SELECT id FROM ssp_games WHERE play_date = "2019-02-10" AND location = "Philadelphia"), 
-    (SELECT id FROM ssp_teams WHERE name = "Lakers" AND location = "Los Angelos"), 0),
+    (SELECT id FROM ssp_teams WHERE name = "Los Angelos Lakers" AND location = "Los Angelos"), 0),
 
 ((SELECT id FROM ssp_games WHERE play_date = "2019-02-10" AND location = "Philadelphia"), 
-    (SELECT id FROM ssp_teams WHERE name = "76ers" AND location = "Philadelphia"), 1),
+    (SELECT id FROM ssp_teams WHERE name = "Philadelphia 76ers" AND location = "Philadelphia"), 1),
 
 ((SELECT id FROM ssp_games WHERE play_date = "2019-01-23" AND location = "Boston"), 
-    (SELECT id FROM ssp_teams WHERE name = "Celtics" AND location = "Boston"), 1),
+    (SELECT id FROM ssp_teams WHERE name = "Boston Celtics" AND location = "Boston"), 1),
 
 ((SELECT id FROM ssp_games WHERE play_date = "2019-01-23" AND location = "Boston"), 
-    (SELECT id FROM ssp_teams WHERE name = "Cavaliers" AND location = "Cleveland"), 0),
+    (SELECT id FROM ssp_teams WHERE name = "Cleveland Cavaliers" AND location = "Cleveland"), 0),
 
 ((SELECT id FROM ssp_games WHERE play_date = "2018-12-16" AND location = "Cleveland"), 
-    (SELECT id FROM ssp_teams WHERE name = "Cavaliers" AND location = "Cleveland"), 1),
+    (SELECT id FROM ssp_teams WHERE name = "Cleveland Cavaliers" AND location = "Cleveland"), 1),
 
 ((SELECT id FROM ssp_games WHERE play_date = "2018-12-16" AND location = "Cleveland"), 
-    (SELECT id FROM ssp_teams WHERE name = "76ers" AND location = "Philadelphia"), 0);
+    (SELECT id FROM ssp_teams WHERE name = "Philadelphia 76ers" AND location = "Philadelphia"), 0);
 
 
 -- MASCOTS -- 

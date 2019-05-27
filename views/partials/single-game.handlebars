@@ -1,17 +1,22 @@
 <div class="game-row row result-row">
     <h3>{{home}} VS {{visit}}</h3>
-    <ul>
+    <ul class="score-list">
         <li>{{home}}</li>
         <li>Score: {{h_score}}</li>
     </ul>
-    <ul>
+    <ul class="score-list">
         <li>{{visit}}</li>
         <li>Score: {{v_score}}</li>
     </ul>
+    {{#if winner}}
     <h4>Winner: {{winner}}</h4>
+    {{/if}}
     {{#if mvp}}
         <h4>Most Valuable Player</h4>
         <a href="player-detail.html">{{mvp.name}}</a>
     {{/if}}
-    <div onclick="removeGame()">|Remove Game|</div>
+    {{#if remove}}
+    {{! TODO}}
+    <div class="removal" onclick="removeGame()">|Remove Game|</div>
+    {{/if}}
 </div>

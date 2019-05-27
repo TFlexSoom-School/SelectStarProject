@@ -19,8 +19,8 @@ module.exports = (db) => {
 
     function getGames(name, context, res, next) {
         db.pool.query(
-            "SELECT g.play_date as \"date\", g.location as location, a.name as home, b.name as visit " +
-            "from ssp_games g " +
+            "SELECT g.id, g.play_date as \"date\", g.location as location, a.name as home, b.name as visit, " +
+            "g.score_home as h_score, g.score_visit as v_score, g.winning_team from ssp_games g " +
             "INNER JOIN ( " +
             "    SELECT * FROM ssp_games_teams gt " +
             "    WHERE gt.home_team = 1 " +
@@ -41,6 +41,13 @@ module.exports = (db) => {
                 } else {
                     results.forEach((element) => {
                         element.game = true;
+
+                        if(element.winning_team == 1){
+                            element.winner = element.home;
+                        }else if(element.winning_team == 0){
+                            element.winner = element.visit;
+                        }
+
                         context.push(element);
                     });
                     next();
@@ -51,8 +58,8 @@ module.exports = (db) => {
 
     function getGamesStar(context, res, next) {
         db.pool.query(
-            "SELECT g.play_date as \"date\", g.location as location, a.name as home, b.name as visit " +
-            "from ssp_games g " +
+            "SELECT g.id, g.play_date as \"date\", g.location as location, a.name as home, b.name as visit, " +
+            "g.score_home as h_score, g.score_visit as v_score, g.winning_team from ssp_games g " +
             "INNER JOIN ( " +
             "    SELECT * FROM ssp_games_teams gt " +
             "    WHERE gt.home_team = 1 " +
@@ -72,8 +79,16 @@ module.exports = (db) => {
                 } else {
                     results.forEach((element) => {
                         element.game = true;
+
+                        if(element.winning_team == 1){
+                            element.winner = element.home;
+                        }else if(element.winning_team == 0){
+                            element.winner = element.visit;
+                        }
+
                         context.push(element);
                     });
+
                     next();
                 }
             });

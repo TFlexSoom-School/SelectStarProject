@@ -7,22 +7,23 @@
 {{#if game}}
 <div class="game-row row result-row">
     <h3>{{home}} VS {{visit}}</h3>
-    <ul>
+    <ul class="score-list">
         <li>{{home}}</li>
         <li>Score: {{h_score}}</li>
     </ul>
-    <ul>
+    <ul class="score-list">
         <li>{{visit}}</li>
         <li>Score: {{v_score}}</li>
     </ul>
+    {{#if winner}}
     <h4>Winner: {{winner}}</h4>
+    {{/if}}
     {{#if mvp}}
         <h4>Most Valuable Player</h4>
         <a href="player-detail.html">{{mvp.name}}</a>
     {{/if}}
-    {{#if remove}}
-    {{! TODO}}
-    <div class="removal" onclick="removeGame()">|Remove Game|</div>
+    {{#if id}}
+        <div class="removal" onclick="removeGame({{id}})">|Remove Game|</div>
     {{/if}}
 </div>
 {{/if}}
@@ -35,9 +36,8 @@
         <li>Color: {{color}}</li>
         <li><span onclick="updateCoach({{name}})">Coach: {{coach}}</span></li>
     </ul>
-    {{#if remove}}
-    {{! TODO}}
-    <div class="removal" onclick="removeTeam()">|Remove Team|</div>
+    {{#if id}}
+        <div class="removal" onclick="removeTeam({{id}})">|Remove Team|</div>
     {{/if}}
 </div>
 {{/if}}
@@ -74,7 +74,7 @@
         {{/if}}
     </ul>
     {{#if id}}
-    <div class="removal" onclick="removePlayer({{id}})">|Remove Player|</div>
+        <div class="removal" onclick="removePlayer({{id}})">|Remove Player|</div>
     {{/if}}
 </div>
 {{/if}}
@@ -84,12 +84,10 @@
     <h3>{{animal}}</h3>
     <ul>
         <li>Team: {{teamName}}</li>
-        <!--<li>Color: {{color}}</li>-->
         <li>Actor Name: {{name}}</li>
     </ul>
-    {{#if remove}}
-    {{! TODO}}
-    <div class="removal" onclick="removeMascot()">|Remove Mascot|</div>
+    {{#if id}}
+        <div class="removal" onclick="removeMascot({{id}})">|Remove Mascot|</div>
     {{/if}}
 </div>
 {{/if}}

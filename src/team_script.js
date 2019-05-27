@@ -61,8 +61,8 @@ function insertTeam(){
    inputObject = {};
 
    inputObject.name = formInput["team-name"]; 
-   inputObject.location = formInput["team-loc"];       /* add required fields */
-   inputObject.color = formInput["team-color"];  /* add length requirement */
+   inputObject.location = formInput["team-loc"];
+   inputObject.color = formInput["team-color"];
    inputObject.coach = formInput["coach-name"];
 
 
