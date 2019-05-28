@@ -15,18 +15,27 @@
 </div>
 
 
-<div class="team-form">
-    <h3>New Team!</h3>
-    <form id="team-insert">
-        <label>Team Name</label>
-        <input type="text" name="team-name" value="Cavaliers">
-        <label>City</label>
-        <input type="text" name="team-loc" value="Boston">
-        <label>Color Code</label>
-        <input type="text" name="team-color" value="#33f3f">
-        <label>Coach Name</label>
-        <input type="text" name="coach-name" value="Tommy Winston">
-    </form>
-    <span class="button insert-submit" onclick="insertTeam()">Submit!</span>
+<div class="team-forms">
+    <div>
+        <h3>New Team!</h3>
+        <form id="team-insert">
+            <label>Team Name</label>
+            <input type="text" name="team-name" value="Cavaliers">
+            <label>City</label>
+            <input type="text" name="team-loc" value="Boston">
+            <label>Color Code</label>
+            <input type="text" name="team-color" value="#33f3f">
+            <label>Coach Name</label>
+            <input type="text" name="coach-name" value="Tommy Winston">
+        </form>
+        <span class="button insert-submit" onclick="insertTeam()">Submit!</span>
+    </div>
+    <div>
+        <h3>New Coach Name!</h3>
+        <form id="team-up-coach">
+            <input type="text" name="coach-name" value="...">
+        </form>
+        <p> Click on a Coach's Name to update it!</p>
+    </div>
 </div>
 
