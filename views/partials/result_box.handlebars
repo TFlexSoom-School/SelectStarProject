@@ -34,7 +34,7 @@
     <ul>
         <li>Location: {{loc}}</li>
         <li>Color: {{color}}</li>
-        <li><span onclick="updateCoach({{name}})">Coach: {{coach}}</span></li>
+        <li><span onclick="updateCoach({{id}})">Coach: {{coach}}</span></li>
     </ul>
     {{#if id}}
         <div class="removal" onclick="removeTeam({{id}})">|Remove Team|</div>
@@ -67,8 +67,8 @@
         <li>Points Made: {{points}}</li>
         {{#if position}}
         <li> Plays Positions:
-        {{#each position}}
-            {{position_name}} |
+        {{#each position.position_name}}
+            {{position.position_name}} |
         {{/each}}
         </li>
         {{/if}}

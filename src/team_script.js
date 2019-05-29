@@ -80,6 +80,36 @@ function insertTeam(){
     xhttp.send(JSON.stringify(inputObject));
 }
 
+function updateCoach(id){
+    var inputs = document.querySelectorAll("#team-up-coach input");
+    var element = inputs[0];
+    var name = null;
+    for(var i = 0; i < inputs.length; i ++){
+        element = inputs[i];
+        if(element.getAttribute("name") === "coach-name"){
+            name = element.value;
+            break;
+        }
+    }
+
+    console.log(name);
+    if(name != null && name != "..." && name != ""){
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = () => {
+            if(xhttp.readyState == 4 && xhttp.status == 200) {
+                window.location.replace("/teams.html");
+            }else if(xhttp.readyState == 4){
+                element.value = "ERROR!";
+            }
+        }
+        xhttp.open("POST", "/update/team-coach", true);
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        xhttp.send(JSON.stringify({"id": id, "name": name}));
+    }else{
+        element.value = "ERROR!";
+    }
+}
+
 
 search();
 
@@ -92,3 +122,8 @@ document.getElementById("team-insert").addEventListener('submit', (e) => {
     insertTeam();
     e.preventDefault();
 }, false); 
+
+document.getElementById("team-up-coach").addEventListener('submit', (e) =>{
+    insertTeam();
+    e.preventDefault();
+}, false);

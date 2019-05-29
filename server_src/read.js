@@ -97,7 +97,7 @@ module.exports = (db) => {
 
     function getTeamsName(name, context, res, next) {
         db.pool.query(
-            "SELECT t.name, t.location AS loc, t.color, t.coach FROM ssp_teams t " +
+            "SELECT t.id, t.name, t.location AS loc, t.color, t.coach FROM ssp_teams t " +
             "WHERE t.name =" + escape(name),
             (err, results, fields) => {
                 if (err) {
@@ -118,7 +118,7 @@ module.exports = (db) => {
 
     function getTeamsStar(context, res, next) {
         db.pool.query(
-            "SELECT t.name, t.location AS loc, t.color, t.coach FROM ssp_teams t",
+            "SELECT t.id, t.name, t.location AS loc, t.color, t.coach FROM ssp_teams t",
             (err, results, fields) => {
                 if (err) {
                     console.log("== Query ERROR");
@@ -234,7 +234,6 @@ module.exports = (db) => {
             });
     }
 
-    /* TODO Add positions */
     /* TODO make more modular -- # of spaces = number of nexts required */
     function getPlayersId(id, context, res, next) {
         db.pool.query(
@@ -251,6 +250,29 @@ module.exports = (db) => {
                     res.status(500).end();
                 } else {
                     context.push(results[0]);
+                    next();
+                }
+            });
+    }
+
+    function getPositionsPlayerId(id, context, res, next){
+        db.pool.query(
+            "SELECT ssp_positions.name AS 'position_name'" +
+            "FROM ssp_positions " +
+            "INNER JOIN ssp_players_positions ON ssp_positions.id = ssp_players_positions.position_id " +
+            "INNER JOIN ssp_players ON ssp_players.id = ssp_players_positions.player_id " +
+            "WHERE ssp_players.id = ?",
+            [id],
+            (err, results, fields) =>{
+                if(err){
+                    console.log("== Query ERROR");
+                    console.log(err);
+                    res.status(500).end();
+                }else{
+                    /* Scope of context prevents equal operator */
+                    results.forEach((element) => {
+                        context.push(element);
+                    });
                     next();
                 }
             });
@@ -415,11 +437,21 @@ module.exports = (db) => {
     });
 
     router.get("/pl-detail/:id", (req, res) => {
-        var results = [];
+        var players = [];
+        var positions = [];
+        var queries = 0;
         function next(){
-            res.status(200).location("/").render("player-detail", results[0]);
+            queries ++;
+            if(queries == 2){
+                var context = players[0];
+                if(positions !== []){
+                    context.position = positions;
+                }
+                res.status(200).location("/").render("player-detail", context);
+            }
         }
-        getPlayersId(req.params.id, results, res, next);
+        getPlayersId(req.params.id, players, res, next);
+        getPositionsPlayerId(req.params.id, positions, res, next);
     });
 
     return router;

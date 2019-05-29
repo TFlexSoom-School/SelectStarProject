@@ -81,10 +81,32 @@ module.exports = (db) => {
             });
     }
 
+    function updateTeamCoach(id, name, res){
+        db.pool.query(
+            "UPDATE ssp_teams " +
+            "SET coach = ?" +
+            "WHERE ssp_teams.id = ?",
+            [name, id],
+            (error, results, fields) => {
+                if(error){
+                    res.status(500).end();
+                }else{
+                    res.status(200).end();
+                }
+            });
+    }
+
+
+    /* Post Routes */
+
     router.post("/pos-up", (req, res) => {
         var id = req.body.id;
         var posName = req.body.posName;
         updatePos(id, posName, res);
+    });
+
+    router.post("/team-coach", (req, res) => {
+        updateTeamCoach(req.body.id, req.body.name, res);
     });
     
     return router;

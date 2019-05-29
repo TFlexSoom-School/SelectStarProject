@@ -6,7 +6,7 @@
 SELECT * FROM ssp_teams;
 
 -- Show table with the proper team name
-SELECT t.name, t.location AS loc, t.color, t.coach FROM ssp_teams t
+SELECT t.id, t.name, t.location AS loc, t.color, t.coach FROM ssp_teams t
 WHERE t.name = ":name";
 
 
@@ -17,7 +17,7 @@ VALUES (':teamName', ':teamLocation', ':teamColor', ':coachName');
 -- Update an entry.   Usually used for coach since coaches tend to change teams. 
 UPDATE ssp_teams
 SET coach = ':new_coachName'
-WHERE coach = ':coachName';
+WHERE ssp_teams.id = ':id'
 
 -- Delete from all tables which have the Team_ID
 DELETE FROM ssp_teams
@@ -91,6 +91,12 @@ FROM ssp_positions
 INNER JOIN ssp_players_positions ON ssp_positions.id = ssp_players_positions.position_id
 INNER JOIN ssp_players ON ssp_players.id = ssp_players_positions.player_id
 WHERE ssp_players.fname = ":insertFName" AND ssp_players.lname = ":insertLName";
+
+SELECT ssp_positions.name
+FROM ssp_positions
+INNER JOIN ssp_players_positions ON ssp_positions.id = ssp_players_positions.position_id
+INNER JOIN ssp_players ON ssp_players.id = ssp_players_positions.player_id
+WHERE ssp_players.id = ":id";
 
 -- Mascot TABLE -------------------------------------------------------------------------------------------
 
