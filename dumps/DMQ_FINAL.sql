@@ -102,7 +102,7 @@ WHERE ssp_players.id = ":id";
 
 -- edit 5/12 insert mascot info using the team's name
 -- insert the mascot info
-INSERT INTO ssp_mascots (name, animal, team_id) VALUES (':insertActor', ':insertCharacter', (SELECT id FROM ssp_teams WHERE name = "teamName"));
+INSERT INTO ssp_mascots (name, animal, team_id) VALUES (':insertActor', ':insertCharacter', (SELECT id FROM ssp_teams WHERE name = "teamName" AND location = ":locationName"));
 
 -- delte mascot info
 DELETE FROM ssp_mascots

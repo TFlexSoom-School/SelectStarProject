@@ -158,6 +158,26 @@ module.exports = (db) => {
         newGameWithId(req.body, res, next);
     });
 
+    router.post("/mascot", (req, res) => {
+        var sql = 
+        "INSERT INTO ssp_mascots (name, animal, team_id) " +
+        "VALUES (?, ?, (SELECT id FROM ssp_teams WHERE name = ? AND location = ?));";
+        var inserts = [req.body["mascot-name"], req.body["mascot-anim"], req.body["mascot-team"], req.body["mascot-team-loc"]];
+        db.pool.query(sql, inserts, (error, results, fields) => {
+            if(error){
+                if(error.errno == 1062){
+                    /* That team already has a mascot. */
+                    res.status(409).send("TeamExists");
+                }
+                console.log("== Query Error!");
+                console.log(JSON.stringify(error));
+                res.status(500).end();
+            }else{
+                res.status(200).end();
+            }
+        });
+    });
+
 
 
 

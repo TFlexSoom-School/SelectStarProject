@@ -21,14 +21,32 @@ module.exports = (db) => {
             (error, results, fields) => {
                 if(res){
                     if(error){
-                        res.status(500).send();
+                        console.log("== Query Error");
+                        res.status(500).end();
                     }else{
-                        res.status(200).send();
+                        res.status(200).end();
                     }
                 }
             }
         )
     }
+
+
+    /* Routes */
+
+    router.post("/mascot/:id", (req, res) => {
+        db.pool.query(
+            "DELETE FROM ssp_mascots WHERE ssp_mascots.id = ?",
+            [req.params.id],
+            (error, results, fields) =>{
+                if(error){
+                    console.log("== Query Error");
+                    res.status(500).end();
+                }else{
+                    res.status(200).end();
+                }
+            });
+    });
 
 
     return router;

@@ -414,7 +414,7 @@ module.exports = (db) => {
     router.get("/ma", (req, res) => {
         var context = { results: [] };
         db.pool.query(
-            "SELECT ssp_mascots.name, ssp_mascots.animal, ssp_teams.name AS teamName " +
+            "SELECT ssp_mascots.id, ssp_mascots.name, ssp_mascots.animal, ssp_teams.name AS teamName " +
             "FROM ssp_mascots " +
             "INNER JOIN ssp_teams on ssp_mascots.team_id = ssp_teams.id;",
             (err, results, fields) => {
