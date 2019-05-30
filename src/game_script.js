@@ -47,6 +47,35 @@ function search(){
     }
 }
 
+function insertGame(){
+    var inputs = document.querySelectorAll("#game-insert-form input");
+    var object = {};
+    const response = document.getElementById("game-insert-response")
+    inputs.forEach((element) =>{
+        var name = element.getAttribute("name");
+        object[name] = element.value;
+        if(element.value == "" && element.getAttribute("not-necessary")){
+            object[name] = null;
+        }
+    });
+
+    if(Object.values(object).indexOf("") != -1){
+        response.innerText = "Bad Values!";
+    }else{
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = () => {
+            if(xhttp.readyState == 4 && xhttp.status == 200) {
+                window.location.replace("/games.html");
+            }else if(xhttp.readyState == 4){
+                response.innerText = "ERROR!";
+            }
+        }
+        xhttp.open("POST", "/create/game", true);
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        xhttp.send(JSON.stringify(object));
+    }
+}
+
 /* Script */
 //console.log("== LOADED PLAYER_SCRIPT!");
 search();
@@ -54,4 +83,9 @@ search();
 document.getElementById("ga-search").addEventListener('submit', (e) => {
     search();
     e.preventDefault();
-}, false); 
+}, false);
+
+document.getElementById("game-insert-form").addEventListener('submit', (e) =>{
+    insertGame();
+    e.preventDefault();
+});

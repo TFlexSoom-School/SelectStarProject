@@ -13,26 +13,30 @@
         {{> single-game}}
     {{/each}}
 </div>
-<div class="hidden">
+<div>
     <h2>New Game!</h2>
-    <form>
+    <form id="game-insert-form">
         <label>Game Date</label>
-        <input type="date" name="game-date">
+        <input type="date" name="date">
         <label>City</label>
-        <input type="text" name="game-loc" value="Seattle">
+        <input type="text" name="loc" value="Seattle">
         <label>Home Team Name</label>
-        <input type="text" name="game-h-team" value="Home Team">
+        <input type="text" name="h-team" value="Home Team">
         <label>Visiting Team Name</label>
-        <input type="text" name="game-v-team" value="Visiting Team">
+        <input type="text" name="v-team" value="Visiting Team">
         <label>Visiting Team Location</label>
-        <input type="text" name="game-v-team-loc" value="Los Angelos">
+        <input type="text" name="v-team-loc" value="Los Angelos">
         <label>Home Team Score</label>
-        <input type="number" name="score-h">
+        <input type="number" name="score-h" value="5">
         <label>Visiting Team Score</label>
-        <input type="number" name="score-v">
+        <input type="number" name="score-v" value="15">
         <label>MVP First Name</label>
-        <input type="text" name="mvp-fname" value="Gary">
+        <input type="text" name="mvp-fname" not-necessary="truly" value="Gary">
         <label>MVP Last Name</label>
-        <input type="text" name="mvp-lname" value="Luong">
+        <input type="text" name="mvp-lname" not-necessary="truly" value="Luong">
+        <label>MVP Jersey Number</label>
+        <input type="number" name="mvp-jersey" not-necessary="truly" value="1">
+        <span id="game-insert-response"></span>
+        <div class="button" onclick="insertGame()">|Submit|</div>
     </form>
 </div>

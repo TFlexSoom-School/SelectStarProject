@@ -118,7 +118,7 @@ INNER JOIN ssp_teams on ssp_mascots.team_id = ssp_teams.id;
 -- Game TABLE -------------------------------------------------------------------------------------------
 
 -- insert game data.  
-INSERT INTO ssp_games (play_date, locaction, winning_team, mvp, score_home, score_visit)
+INSERT INTO ssp_games (play_date, location, winning_team, mvp, score_home, score_visit)
 VALUES (':date', ':inputLocation', :insertBoolValue,  (SELECT id FROM ssp_players where fname = 'insertFName' and lname = 'insertLName' ), :insertHome, :insertAway);
 
 -- display the game ID, game date, mvp ID, and first and last name of the player 
@@ -127,12 +127,18 @@ SELECT ssp_games.id, ssp_games.play_date, ssp_games.mvp, ssp_players.fname, ssp_
 FROM ssp_players
 INNER JOIN ssp_games on ssp_games.mvp = ssp_players.id;
 
+-- delete any game based on ID
+DELETE FROM ssp_games
+WHERE ssp_games.id = :id;
+
 
 -- Game to Team TABLE -------------------------------------------------------------------------------------------
 
 -- insert matchup information
 
-INSERT INTO ssp_games_teams (gid, tid, home_team) VALUES (:gameID, :awayTeamID, :homeTeamID);
+INSERT INTO ssp_games_teams (gid, tid, home_team) VALUES (:gameID, (
+    SELECT id FROM ssp_teams WHERE team_name = :teamName AND location = :loc
+), :isHomeTeam);
 
 
 -- display the game id, home team name and away team name
