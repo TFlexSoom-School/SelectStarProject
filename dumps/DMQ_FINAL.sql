@@ -32,7 +32,11 @@ VALUES ((select id from ssp_teams where name = ':teamName'), :insertJersey, ':in
 
 -- edit 5/12 delete a player's info using first and last name
 DELETE FROM ssp_players
-WHERE fname = ":insertFname" and lname = 'insertLName'
+WHERE fname = ":insertFname" and lname = 'insertLName';
+
+-- Also Delete a player by ID, cause we got that too.
+DELETE FROM ssp_players
+WHERE id = ":playerId";
 
 -- show all info for all players
 SELECT * FROM ssp_players;

@@ -53,7 +53,7 @@ function insertMascot(){
 
 function removeMascot(id){
     var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "/delete/mascot/" + id, true);
+    xhttp.open("POST", "/delete/mascot-" + id.toString(), true);
     xhttp.onreadystatechange = () => {
         if(xhttp.readyState == 4 && xhttp.status == 200){
             window.location.replace("/mascots.html");

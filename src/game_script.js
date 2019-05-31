@@ -76,6 +76,17 @@ function insertGame(){
     }
 }
 
+function removeGame(id){
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("POST", "/delete/game-" + id.toString(), true);
+    xhttp.onreadystatechange = () => {
+        if(xhttp.readyState == 4 && xhttp.status == 200){
+            window.location.replace("/games.html");
+        }
+    }
+    xhttp.send();
+}
+
 /* Script */
 //console.log("== LOADED PLAYER_SCRIPT!");
 search();

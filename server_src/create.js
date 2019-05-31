@@ -133,8 +133,7 @@ module.exports = (db) => {
         var inserts = [req.body.name, req.body.location, req.body.color, req.body.coach];
         db.pool.query(sql,inserts,function(error, results, fields){
             if(error){
-                console.log(JSON.stringify(error))
-                res.write(JSON.stringify(error));
+                console.log(JSON.stringify(error));
                 res.status(500).end();
             }else{
                 res.status(200).end();

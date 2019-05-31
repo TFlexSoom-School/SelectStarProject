@@ -89,7 +89,11 @@ ALTER TABLE ssp_teams
     ADD KEY (name, location),
     ADD KEY (name, coach),
     ADD KEY (name, color),
-    ADD KEY (location, color);
+    ADD KEY (location, color),
+    ADD CONSTRAINT U_teams_name_loc UNIQUE (name, location),
+    ADD CONSTRAINT U_teams_name_coa UNIQUE (name, coach),
+    ADD CONSTRAINT U_teams_name_col UNIQUE (name, color),
+    ADD CONSTRAINT U_teams_loc_col UNIQUE (location, color);
 
 ALTER TABLE ssp_players
     ADD CONSTRAINT FK_PersonTeam
@@ -98,7 +102,9 @@ ALTER TABLE ssp_players
                 ON DELETE SET NULL
                 ON UPDATE CASCADE,
     ADD KEY (fname, lname, nickname),
-    ADD KEY (team_id, jersey);
+    ADD KEY (team_id, jersey),
+    ADD CONSTRAINT U_players_names UNIQUE (fname, lname, nickname),
+    ADD CONSTRAINT U_players_team_jers UNIQUE (team_id, jersey);
 
 ALTER TABLE ssp_players_positions
     ADD CONSTRAINT FK_PlayerPos
@@ -118,7 +124,8 @@ ALTER TABLE ssp_games
             REFERENCES ssp_players(id)
             ON DELETE SET NULL
             ON UPDATE CASCADE,
-    ADD KEY (play_date, location);
+    ADD KEY (play_date, location),
+    ADD CONSTRAINT U_play_loc UNIQUE (play_date, location);
 
 
 ALTER TABLE ssp_games_teams
@@ -139,7 +146,8 @@ ALTER TABLE ssp_mascots
             REFERENCES ssp_teams(id)
             ON DELETE CASCADE
             ON UPDATE CASCADE,
-    ADD KEY (team_id);
+    ADD KEY (team_id),
+    ADD UNIQUE (team_id);
 
 
 -- EXAMPLE INFO --
