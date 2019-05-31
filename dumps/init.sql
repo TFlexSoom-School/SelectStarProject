@@ -89,7 +89,11 @@ ALTER TABLE ssp_teams
     ADD KEY (name, location),
     ADD KEY (name, coach),
     ADD KEY (name, color),
-    ADD KEY (location, color);
+    ADD KEY (location, color),
+    ADD CONSTRAINT U_teams_name_loc UNIQUE (name, location),
+    ADD CONSTRAINT U_teams_name_coa UNIQUE (name, coach),
+    ADD CONSTRAINT U_teams_name_col UNIQUE (name, color),
+    ADD CONSTRAINT U_teams_loc_col UNIQUE (location, color);
 
 ALTER TABLE ssp_players
     ADD CONSTRAINT FK_PersonTeam
@@ -98,7 +102,9 @@ ALTER TABLE ssp_players
                 ON DELETE SET NULL
                 ON UPDATE CASCADE,
     ADD KEY (fname, lname, nickname),
-    ADD KEY (team_id, jersey);
+    ADD KEY (team_id, jersey),
+    ADD CONSTRAINT U_players_names UNIQUE (fname, lname, nickname),
+    ADD CONSTRAINT U_players_team_jers UNIQUE (team_id, jersey);
 
 ALTER TABLE ssp_players_positions
     ADD CONSTRAINT FK_PlayerPos
@@ -118,7 +124,8 @@ ALTER TABLE ssp_games
             REFERENCES ssp_players(id)
             ON DELETE SET NULL
             ON UPDATE CASCADE,
-    ADD KEY (play_date, location);
+    ADD KEY (play_date, location),
+    ADD CONSTRAINT U_play_loc UNIQUE (play_date, location);
 
 
 ALTER TABLE ssp_games_teams
@@ -139,7 +146,8 @@ ALTER TABLE ssp_mascots
             REFERENCES ssp_teams(id)
             ON DELETE CASCADE
             ON UPDATE CASCADE,
-    ADD KEY (team_id);
+    ADD KEY (team_id),
+    ADD UNIQUE (team_id);
 
 
 -- EXAMPLE INFO --
@@ -246,37 +254,37 @@ VALUES
 -- GAMES -- 
 INSERT INTO ssp_games (play_date, location, winning_team, mvp, score_home, score_visit)
 VALUES
-("2019-03-09", "Los Angelos", 0, NULL, 107, 120),
-("2019-02-10", "Philadelphia", 1, (SELECT id FROM ssp_players where fname = "Wilson" and lname = "Chandler" ), 143, 120),
-("2019-01-23", "Boston", 1, NULL, 123, 103),
-("2018-12-16", "Cleveland", 0, (SELECT id FROM ssp_players where fname = "Timothy" and lname = "McConnell" ), 105, 128),
-("2019-05-12", "Portland", 1,  (SELECT id FROM ssp_players where fname = "CJ" and lname = "McCollum" ), 100, 80),
-("2019-05-10", "Houston", 1,  (SELECT id FROM ssp_players where fname = "Stephen" and lname = "Curry" ), 90, 85);
+("2019-03-09", "Los Angelos, CA", 0, NULL, 107, 120),
+("2019-02-10", "Philadelphia, PA", 1, (SELECT id FROM ssp_players where fname = "Wilson" and lname = "Chandler" ), 143, 120),
+("2019-01-23", "Boston, MA", 1, NULL, 123, 103),
+("2018-12-16", "Cleveland, OH", 0, (SELECT id FROM ssp_players where fname = "Timothy" and lname = "McConnell" ), 105, 128),
+("2019-05-12", "Portland, OR", 1,  (SELECT id FROM ssp_players where fname = "CJ" and lname = "McCollum" ), 100, 80),
+("2019-05-10", "Houston, TX", 1,  (SELECT id FROM ssp_players where fname = "Stephen" and lname = "Curry" ), 90, 85);
 
 INSERT INTO ssp_games_teams (gid, tid, home_team)
 VALUES
-((SELECT id FROM ssp_games WHERE play_date = "2019-03-09" AND location = "Los Angelos"), 
+((SELECT id FROM ssp_games WHERE play_date = "2019-03-09" AND location = "Los Angelos, CA"), 
     (SELECT id FROM ssp_teams WHERE name = "Los Angelos Lakers" AND location = "Los Angelos, CA"), 1), 
 
-((SELECT id FROM ssp_games WHERE play_date = "2019-03-09" AND location = "Los Angelos"), 
+((SELECT id FROM ssp_games WHERE play_date = "2019-03-09" AND location = "Los Angelos, CA"), 
     (SELECT id FROM ssp_teams WHERE name = "Boston Celtics" AND location = "Boston, MA"), 0),
 
-((SELECT id FROM ssp_games WHERE play_date = "2019-02-10" AND location = "Philadelphia"), 
+((SELECT id FROM ssp_games WHERE play_date = "2019-02-10" AND location = "Philadelphia, PA"), 
     (SELECT id FROM ssp_teams WHERE name = "Los Angelos Lakers" AND location = "Los Angelos, CA"), 0),
 
-((SELECT id FROM ssp_games WHERE play_date = "2019-02-10" AND location = "Philadelphia"), 
+((SELECT id FROM ssp_games WHERE play_date = "2019-02-10" AND location = "Philadelphia, PA"), 
     (SELECT id FROM ssp_teams WHERE name = "Philadelphia 76ers" AND location = "Philadelphia, PA"), 1),
 
-((SELECT id FROM ssp_games WHERE play_date = "2019-01-23" AND location = "Boston"), 
+((SELECT id FROM ssp_games WHERE play_date = "2019-01-23" AND location = "Boston, MA"), 
     (SELECT id FROM ssp_teams WHERE name = "Boston Celtics" AND location = "Boston, MA"), 1),
 
-((SELECT id FROM ssp_games WHERE play_date = "2019-01-23" AND location = "Boston"), 
+((SELECT id FROM ssp_games WHERE play_date = "2019-01-23" AND location = "Boston, MA"), 
     (SELECT id FROM ssp_teams WHERE name = "Cleveland Cavaliers" AND location = "Cleveland, OH"), 0),
 
-((SELECT id FROM ssp_games WHERE play_date = "2018-12-16" AND location = "Cleveland"), 
+((SELECT id FROM ssp_games WHERE play_date = "2018-12-16" AND location = "Cleveland, OH"), 
     (SELECT id FROM ssp_teams WHERE name = "Cleveland Cavaliers" AND location = "Cleveland, OH"), 1),
 
-((SELECT id FROM ssp_games WHERE play_date = "2018-12-16" AND location = "Cleveland"), 
+((SELECT id FROM ssp_games WHERE play_date = "2018-12-16" AND location = "Cleveland, OH"), 
     (SELECT id FROM ssp_teams WHERE name = "Philadelphia 76ers" AND location = "Philadelphia, PA"), 0);
 
 

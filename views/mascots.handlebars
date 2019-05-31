@@ -7,14 +7,18 @@
         {{> single-mascot}}
     {{/each}}
 </div>
-<div class="hidden">
+<div>
     <h2>New Mascot!</h2>
-    <form>
+    <form id="mascot-insert">
         <label>Name</label>
         <input type="text" name="mascot-name" value="Bear Grillz">
         <label>Animal | Costume</label>
         <input type="text" name="mascot-anim" value="Shark">
         <label>Team Name</label>
-        <input type="text" name="mascot-team" value="Cavaliers">
+        <input type="text" name="mascot-team" value="Portland Trailblazers">
+        <label>Team Location</label>
+        <input type="text" name="mascot-team-loc" value="Portland, OR">
     </form>
+    <div class="button" onclick="insertMascot()">|Submit|</div>
+    <div id="insert-response"></div>
 </div>

@@ -83,6 +83,17 @@ function insertPlayer(){
     xhttp.send(JSON.stringify(inputObject));
 }
 
+function removePlayer(id){
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("POST", "/delete/player-" + id.toString(), true);
+    xhttp.onreadystatechange = () => {
+        if(xhttp.readyState == 4 && xhttp.status == 200){
+            window.location.replace("/players.html");
+        }
+    }
+    xhttp.send();
+}
+
 /* Script */
 //console.log("== LOADED PLAYER_SCRIPT!");
 search();

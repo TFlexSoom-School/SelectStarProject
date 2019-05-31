@@ -32,7 +32,11 @@ VALUES ((select id from ssp_teams where name = ':teamName'), :insertJersey, ':in
 
 -- edit 5/12 delete a player's info using first and last name
 DELETE FROM ssp_players
-WHERE fname = ":insertFname" and lname = 'insertLName'
+WHERE fname = ":insertFname" and lname = 'insertLName';
+
+-- Also Delete a player by ID, cause we got that too.
+DELETE FROM ssp_players
+WHERE id = ":playerId";
 
 -- show all info for all players
 SELECT * FROM ssp_players;
@@ -102,7 +106,7 @@ WHERE ssp_players.id = ":id";
 
 -- edit 5/12 insert mascot info using the team's name
 -- insert the mascot info
-INSERT INTO ssp_mascots (name, animal, team_id) VALUES (':insertActor', ':insertCharacter', (SELECT id FROM ssp_teams WHERE name = "teamName"));
+INSERT INTO ssp_mascots (name, animal, team_id) VALUES (':insertActor', ':insertCharacter', (SELECT id FROM ssp_teams WHERE name = "teamName" AND location = ":locationName"));
 
 -- delte mascot info
 DELETE FROM ssp_mascots
@@ -118,7 +122,7 @@ INNER JOIN ssp_teams on ssp_mascots.team_id = ssp_teams.id;
 -- Game TABLE -------------------------------------------------------------------------------------------
 
 -- insert game data.  
-INSERT INTO ssp_games (play_date, locaction, winning_team, mvp, score_home, score_visit)
+INSERT INTO ssp_games (play_date, location, winning_team, mvp, score_home, score_visit)
 VALUES (':date', ':inputLocation', :insertBoolValue,  (SELECT id FROM ssp_players where fname = 'insertFName' and lname = 'insertLName' ), :insertHome, :insertAway);
 
 -- display the game ID, game date, mvp ID, and first and last name of the player 
@@ -127,12 +131,18 @@ SELECT ssp_games.id, ssp_games.play_date, ssp_games.mvp, ssp_players.fname, ssp_
 FROM ssp_players
 INNER JOIN ssp_games on ssp_games.mvp = ssp_players.id;
 
+-- delete any game based on ID
+DELETE FROM ssp_games
+WHERE ssp_games.id = :id;
+
 
 -- Game to Team TABLE -------------------------------------------------------------------------------------------
 
 -- insert matchup information
 
-INSERT INTO ssp_games_teams (gid, tid, home_team) VALUES (:gameID, :awayTeamID, :homeTeamID);
+INSERT INTO ssp_games_teams (gid, tid, home_team) VALUES (:gameID, (
+    SELECT id FROM ssp_teams WHERE team_name = :teamName AND location = :loc
+), :isHomeTeam);
 
 
 -- display the game id, home team name and away team name
