@@ -66,6 +66,12 @@ function insertGame(){
         xhttp.onreadystatechange = () => {
             if(xhttp.readyState == 4 && xhttp.status == 200) {
                 window.location.replace("/games.html");
+            }else if(xhttp.readyState == 4 && xhttp.status == 409){
+                if(xhttp.responseText == "MVP-DNE"){
+                    response.innerText = "Could not find that player for MVP!";
+                }else if(xhttp.responseText == "TEAM-DNE"){
+                    response.innerText = "Could not find those teams! Try again";
+                }
             }else if(xhttp.readyState == 4){
                 response.innerText = "ERROR!";
             }

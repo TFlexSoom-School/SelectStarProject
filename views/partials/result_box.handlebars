@@ -19,8 +19,10 @@
     <h4>Winner: {{winner}}</h4>
     {{/if}}
     {{#if mvp}}
-        <h4>Most Valuable Player</h4>
-        <a href="player-detail.html">{{mvp.name}}</a>
+        <div class = "game-mvp">
+            <h4>Most Valuable Player</h4>
+            <a href="/read/pl-detail/{{mvp.id}}">{{mvp.name}}</a>
+        </div>
     {{/if}}
     {{#if id}}
         <div class="removal" onclick="removeGame({{id}})">|Remove Game|</div>

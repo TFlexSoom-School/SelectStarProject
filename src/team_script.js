@@ -93,7 +93,7 @@ function updateCoach(id){
     }
 
     console.log(name);
-    if(name != null && name != "..." && name != ""){
+    if(name != null && name != "..." && name != "" && name != "ERROR!"){
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = () => {
             if(xhttp.readyState == 4 && xhttp.status == 200) {

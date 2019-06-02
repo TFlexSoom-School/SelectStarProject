@@ -29,6 +29,17 @@ function updatePosition(id){
     xhttp.send(JSON.stringify(formInput));
 }
 
+function removePlayer(id){
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("POST", "/delete/player-" + id.toString(), true);
+    xhttp.onreadystatechange = () => {
+        if(xhttp.readyState == 4 && xhttp.status == 200){
+            window.location.replace("/players.html");
+        }
+    }
+    xhttp.send();
+}
+
 /* Script */
 document.getElementById("position-change").addEventListener('submit', (e) => {
     document.getElementById("position-change-button").click();

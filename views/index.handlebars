@@ -18,60 +18,11 @@
     </div>
 </div>
 <div>
-    <p>Search a Game or a Team</p>
+    <p>Search a Team Name</p>
     <form id="gt-search" onsubmit="search()" onsearch="search()">
-        <input type="text" name="searchbar" value="Search...">
+        <input type="text" name="searchbar" value="Los Angelos Lakers">
         <span class="button search-submit" onclick="search()">Search!</span> 
     </form>
-    <div id="search-results" class="results">
-        <p>Results for Search will go here!</p>
-    </div>
-</div>
-<div>
-    <h2>Pages and Descriptions</h2>
-    <div>
-        <h3><a>players</a></h3>
-        <p>
-            The players page will list a series of players in the forms of cards. These cards
-            will entail the details of each player entity. There will be search box to query 
-            for players by name. You can also add players with a modal that will be within this page.
-            This is similar to a CS290 project I accomplished 
-            <a href="http://web.engr.oregonstate.edu/~hilbertt/cs290/BennysList/">here</a>.
-            There will also be a filter box to filter by position. This can be added to similar
-            to the city example from the above link (Just with different code). People can also be
-            removed from this page, making sure to remove any references alongside.
-        </p>
-    </div>
-    <div>
-        <h3><a>teams</a></h3>
-        <p>
-            Encapsulating the team entity, this page will row by row display the different teams in the
-            database. It will have a link to the players page with a pre-queried player search. (This could
-            be done through a GET header) It will also link to the respective mascot. Functionality will
-            be provided to add teams by using already created players without teams. One may also create a new
-            mascot on this page and add it to the respective team. One may also delete teams and mascots from this
-            page. Finally, functionality will be here to kick of players from the team.
-        </p>
-    </div>
-    <div>
-        <h3><a>games</a></h3>
-        <p>
-            Similar to above games can be added and deleted from this page. This page will also
-            carry links to the teams page and host the mvp of each game. The content will be held
-            in rows, but the rows will have large heights. The mvp will only be shown if not null.
-        </p>
-    </div>
-    <div>
-        <h3><a>Mascots</a></h3>
-        <p>
-            Similar to players, a user can insert and select all Mascots.
-        </p>
-    </div>
-    <div>
-        <h3><a>Positions</a></h3>
-        <p>
-            Reveals a list of possible positions. This may also provide other cooler select operations.
-        </p>
-    </div>
+    <div id="search-results" class="results"></div>
 </div>
 

@@ -41,8 +41,14 @@ function insertMascot(){
     xhttp.onreadystatechange = () => {
         if(xhttp.readyState == 4 && xhttp.status == 200){
             window.location.replace("/mascots.html");
-        }else if(xhttp.readyState == 4 && xhttp.status == 409 && xhttp.responseText == "TeamExists"){
-            document.getElementById("insert-response").innerText = "That team has a mascot already."; 
+        }else if(xhttp.readyState == 4 && xhttp.status == 409){
+            if(xhttp.responseText == "TeamExists"){
+                document.getElementById("insert-response").innerText = "That team has a mascot already.";
+            }else if(xhttp.responseText == "TeamDNE"){
+                document.getElementById("insert-response").innerText = "That team does not exist! Go add it!";
+            }else{
+                document.getElementById("insert-response").innerText = "Conflict!";
+            }
         }else if(xhttp.readyState == 4){
             document.getElementById("insert-response").innerText = "Error!";
         }

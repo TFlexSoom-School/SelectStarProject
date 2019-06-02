@@ -41,6 +41,10 @@ function search(){
     function appendResults(strHtml){
         var container = document.getElementById("search-results");
         container.innerHTML = strHtml;
+        rows = document.querySelectorAll("div.row");
+        rows.forEach((element) => {
+            element.removeChild(element.querySelectorAll("div.removal")[0]);
+        });
     }
 
     var inputs = document.querySelectorAll("#gt-search input")

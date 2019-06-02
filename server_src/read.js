@@ -19,7 +19,7 @@ module.exports = (db) => {
 
     function getGames(name, context, res, next) {
         db.pool.query(
-            "SELECT g.id, g.play_date as \"date\", g.location as location, a.name as home, b.name as visit, " +
+            "SELECT g.id, g.play_date as \"date\", g.location as location, g.mvp, a.name as home, b.name as visit, " +
             "g.score_home as h_score, g.score_visit as v_score, g.winning_team from ssp_games g " +
             "INNER JOIN ( " +
             "    SELECT * FROM ssp_games_teams gt " +
@@ -39,6 +39,12 @@ module.exports = (db) => {
                     console.log(err);
                     res.status(500).end();
                 } else {
+                    var mvps = 0;
+                    function finished(){
+                        if(mvps == 0){
+                            next();
+                        }
+                    }
                     results.forEach((element) => {
                         element.game = true;
 
@@ -48,9 +54,24 @@ module.exports = (db) => {
                             element.winner = element.visit;
                         }
 
-                        context.push(element);
+                        /* I should have just done stored procedures by this point */
+                        /* I need some logic in my SQL code... */
+                        if(element.mvp != null){
+                            mvps ++;
+                            var mvpInfo = [];
+                            function gotMVP(){
+                                element.mvp = {id: element.mvp, name: mvpInfo[0].name};
+                                context.push(element);
+                                mvps --;
+                                finished();
+                            }
+                            getPlayersId(element.mvp, mvpInfo, res, gotMVP);
+                        }else{
+                            context.push(element);
+                        }
                     });
-                    next();
+
+                    finished();
                 }
             });
 
@@ -58,7 +79,7 @@ module.exports = (db) => {
 
     function getGamesStar(context, res, next) {
         db.pool.query(
-            "SELECT g.id, g.play_date as \"date\", g.location as location, a.name as home, b.name as visit, " +
+            "SELECT g.id, g.play_date as \"date\", g.location as location, g.mvp, a.name as home, b.name as visit, " +
             "g.score_home as h_score, g.score_visit as v_score, g.winning_team from ssp_games g " +
             "INNER JOIN ( " +
             "    SELECT * FROM ssp_games_teams gt " +
@@ -77,6 +98,12 @@ module.exports = (db) => {
                     console.log(err);
                     res.status(500).end();
                 } else {
+                    var mvps = 0;
+                    function finished(){
+                        if(mvps == 0){
+                            next();
+                        }
+                    }
                     results.forEach((element) => {
                         element.game = true;
 
@@ -85,11 +112,27 @@ module.exports = (db) => {
                         }else if(element.winning_team == 0){
                             element.winner = element.visit;
                         }
-
-                        context.push(element);
+                        /* I should have just done stored procedures by this point */
+                        /* I need some logic in my SQL code... */
+                        if(element.mvp != null){
+                            mvps ++;
+                            var mvpInfo = [];
+                            function gotMVP(){
+                                element.mvp = {
+                                    id: element.mvp, 
+                                    name: (mvpInfo[0].first_name + " " + mvpInfo[0].last_name)
+                                };
+                                context.push(element);
+                                mvps --;
+                                finished();
+                            }
+                            getPlayersId(element.mvp, mvpInfo, res, gotMVP);
+                        }else{
+                            context.push(element);
+                        }
                     });
 
-                    next();
+                    finished();
                 }
             });
 

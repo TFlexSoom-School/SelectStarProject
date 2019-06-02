@@ -16,14 +16,29 @@ module.exports = (db) => {
 
     /* Queries */
 
-    function newGameWithId(insertVals, res, next){
-        if(insertVals["mvp-fname"] && insertVals["mvp-fname"] != null){
+    function checkForPlayer(insertVals, res, next){
+        var sql = "SELECT id FROM ssp_players where fname = ? and lname = ? and jersey = ?";
+        var inserts = [insertVals["mvp-fname"], insertVals["mvp-lname"], insertVals["mvp-jersey"]];
+        db.pool.query(sql, inserts, (error, results, fields) => {
+            if(error){
+                console.log(JSON.stringify(error));
+                res.status(500).end();
+            }else if(results.length == 0){ /* Because === [] does not work */
+                res.status(409).send("MVP-DNE");
+            }else{
+                next(results[0].id);
+            }
+        });
+    }
+
+    function newGameWithId(insertVals, pid, res, next){
+        if(pid){
+            console.log("== This is the player id :" + pid);
         var sql =
                 "INSERT INTO ssp_games (play_date, location, winning_team, mvp, score_home, score_visit) " +
-                "VALUES (?, ?, ?,  (SELECT id FROM ssp_players where fname = ? " +
-                "and lname = ? and jersey = ?), ?, ?);";
-        var inserts = [insertVals.date, insertVals.loc, insertVals.winning, insertVals["mvp-fname"], 
-                insertVals["mvp-lname"], insertVals["mvp-jersey"], insertVals["score-h"], insertVals["score-v"]];
+                "VALUES (?, ?, ?, ?, ?, ?);";
+        var inserts = [insertVals.date, insertVals.loc, insertVals.winning, pid, 
+            insertVals["score-h"], insertVals["score-v"]];
         }else{
             var sql =
                 "INSERT INTO ssp_games (play_date, location, winning_team, score_home, score_visit) " +
@@ -33,7 +48,7 @@ module.exports = (db) => {
         }
         db.pool.query(sql,inserts,function(error, results, fields){
             if(error){
-                console.log(JSON.stringify(error))
+                console.log(JSON.stringify(error));
                 res.status(500).end();
             }else{
                 next(results.insertId);
@@ -71,7 +86,7 @@ module.exports = (db) => {
                 if(error){
                     db.pool.query("DELETE FROM ssp_games WHERE ssp_games.id = ?", [insertVals.id], () => {});
                     console.log(JSON.stringify(error));
-                    res.status(409).send();
+                    res.status(409).send("TEAM-DNE");
                 }else{
                     last();
                 }
@@ -86,7 +101,7 @@ module.exports = (db) => {
                 if(error){
                     db.pool.query("DELETE FROM ssp_games WHERE ssp_games.id = ?", [insertVals.id], () => {});
                     console.log(JSON.stringify(error));
-                    res.status(409).send();
+                    res.status(409).send("TEAM-DNE");
                 }else{
                     last();
                 }
@@ -96,10 +111,6 @@ module.exports = (db) => {
 
 
     /* Routes */
-
-    router.post("/mrg", (req,res) => {
-        res.status(200).send("OK");
-    });
     
     router.post('/player', function(req, res){
         var sql = "INSERT INTO ssp_players (fname, lname, jersey, games, points) VALUES (?,?,?,?,?)";
@@ -149,12 +160,21 @@ module.exports = (db) => {
             req.body.winning = 0;
         }
 
-        function next(id){
+        function second(id){
             req.body["id"] = id;
             newGamesTeams(req.body, res);
         }
 
-        newGameWithId(req.body, res, next);
+        function first(id){
+            newGameWithId(req.body, id, res, second);
+        }
+        
+        if(req.body["mvp-fname"] && req.body["mvp-fname"] != null){
+            checkForPlayer(req.body, res, first);
+        }else{
+            first(null);
+        }
+        
     });
 
     router.post("/mascot", (req, res) => {
@@ -167,6 +187,29 @@ module.exports = (db) => {
                 if(error.errno == 1062){
                     /* That team already has a mascot. */
                     res.status(409).send("TeamExists");
+                }else if(error.errno == 1048){
+                    res.status(409).send("TeamDNE");
+                }else{
+                    console.log("== Query Error!");
+                    console.log(JSON.stringify(error));
+                    res.status(500).end();
+                }
+            }else{
+                res.status(200).end();
+            }
+        });
+    });
+
+    router.post("/pos", (req, res) => {
+        var sql = 
+        "INSERT INTO ssp_positions (name) " +
+        "VALUES (?);";
+        var inserts = [req.body["position-name"]];
+        db.pool.query(sql, inserts, (error, results, fields) => {
+            if(error){
+                if(error.errno == 1062){
+                    /* That team already has a mascot. */
+                    res.status(409).send("PositionExists");
                 }
                 console.log("== Query Error!");
                 console.log(JSON.stringify(error));

@@ -162,7 +162,7 @@ Inner join ssp_teams b on ssp_games_teams.tid = b.id
 INNER JOIN ssp_games on ssp_games.id = ssp_games_teams.gid;
 
 -- display the most recent game details -> More can be added to this later on!
-SELECT g.play_date as "date", g.location as location, a.name as home, b.name as visit
+SELECT g.play_date as "date", g.location as location, g.mvp, a.name as home, b.name as visit
 from ssp_games g
 INNER JOIN ssp_games_teams gta on g.id = gta.gid
 INNER JOIN ssp_games_teams gtb on g.id = gtb.gid
@@ -173,7 +173,7 @@ ORDER BY g.play_date DESC
 LIMIT 1;
 
 -- display all game details with the associated team names
-SELECT g.play_date as "date", g.location as location, a.name as home, b.name as visit
+SELECT g.play_date as "date", g.location as location, g.mvp, a.name as home, b.name as visit
 from ssp_games g
 INNER JOIN (
     SELECT * FROM ssp_games_teams gt
