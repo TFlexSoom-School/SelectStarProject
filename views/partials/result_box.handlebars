@@ -6,7 +6,15 @@
 
 {{#if game}}
 <div class="game-row row result-row">
+    <div class="game-teams">
     <h3>{{home}} VS {{visit}}</h3>
+    {{#if winner}}
+    <h4>Winner: <span class="winner-text">{{winner}}</span></h4>
+    {{/if}}
+    {{#if mvp}}
+    <h4>Most Valuable Player: <a href="/read/pl-detail/{{mvp.id}}">{{mvp.name}}</a></h4>
+    {{/if}}
+    </div>
     <ul class="score-list">
         <li>{{home}}</li>
         <li>Score: {{h_score}}</li>
@@ -15,31 +23,21 @@
         <li>{{visit}}</li>
         <li>Score: {{v_score}}</li>
     </ul>
-    {{#if winner}}
-    <h4>Winner: {{winner}}</h4>
-    {{/if}}
-    {{#if mvp}}
-        <div class = "game-mvp">
-            <h4>Most Valuable Player</h4>
-            <a href="/read/pl-detail/{{mvp.id}}">{{mvp.name}}</a>
-        </div>
-    {{/if}}
     {{#if id}}
-        <div class="removal" onclick="removeGame({{id}})">|Remove Game|</div>
+        <div class="removal" onclick="removeGame({{id}})">Remove Game</div>
     {{/if}}
 </div>
 {{/if}}
 
 {{#if team}}
-<div class="team-box row team-row">
+<div class="team-box row team-row" style="border: solid 3px #{{color}};">
     <h3>{{name}}</h3>
     <ul>
         <li>Location: {{loc}}</li>
-        <li>Color: {{color}}</li>
-        <li><span onclick="updateCoach({{id}})">Coach: {{coach}}</span></li>
+        <li><span class="coach-attr" onclick="updateCoach({{id}})">Coach: {{coach}}</span></li>
     </ul>
     {{#if id}}
-        <div class="removal" onclick="removeTeam({{id}})">|Remove Team|</div>
+        <div class="removal" onclick="removeTeam({{id}})">Remove Team</div>
     {{/if}}
 </div>
 {{/if}}
@@ -76,7 +74,7 @@
         {{/if}}
     </ul>
     {{#if id}}
-        <div class="removal" onclick="removePlayer({{id}})">|Remove Player|</div>
+        <div class="removal" onclick="removePlayer({{id}})">Remove Player</div>
     {{/if}}
 </div>
 {{/if}}
@@ -89,7 +87,7 @@
         <li>Actor Name: {{name}}</li>
     </ul>
     {{#if id}}
-        <div class="removal" onclick="removeMascot({{id}})">|Remove Mascot|</div>
+        <div class="removal" onclick="removeMascot({{id}})">Remove Mascot</div>
     {{/if}}
 </div>
 {{/if}}

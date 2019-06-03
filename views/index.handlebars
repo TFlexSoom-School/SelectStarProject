@@ -13,13 +13,11 @@
         <li>Home Team: <span fieldname="home">{{MRG.home}}</span></li>
         <li>Visiting Team: <span fieldname="visit">{{MRG.visit}}</span></li>
     </ul>
-    <div class="button" onclick="refresh_mrg()">
-        <p class="button-text">Refresh MRG</p>
-    </div>
+    <div class="button" onclick="refresh_mrg()">Refresh MRG</div>
 </div>
 <div>
     <p>Search a Team Name</p>
-    <form id="gt-search" onsubmit="search()" onsearch="search()">
+    <form class="search-form" id="gt-search" onsubmit="search()" onsearch="search()">
         <input type="text" name="searchbar" value="Los Angelos Lakers">
         <span class="button search-submit" onclick="search()">Search!</span> 
     </form>

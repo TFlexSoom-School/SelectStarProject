@@ -3,7 +3,7 @@
 <script src="team_script.js" defer></script>
 
 <div>
-    <form id="team-search" onsubmit="search()" onsearch="search()">
+    <form class="search-form" id="team-search" onsubmit="search()" onsearch="search()">
         <input type="text" name="searchbar" value="Search Teams">
         <span class="button search-submit" onclick="search()">Search!</span> 
     </form>
@@ -18,13 +18,13 @@
 <div class="team-forms">
     <div>
         <h3>New Team!</h3>
-        <form id="team-insert">
+        <form class="insert-form" id="team-insert">
             <label>Team Name</label>
-            <input type="text" name="team-name" value="Cavaliers">
+            <input type="text" name="team-name" value="Corvallis Coders">
             <label>City</label>
-            <input type="text" name="team-loc" value="Boston, MA">
+            <input type="text" name="team-loc" value="Corvallis, OR">
             <label>Color Code</label>
-            <input type="text" name="team-color" value="#33f3f">
+            <input type="text" name="team-color" value="3f3f3f">
             <label>Coach Name</label>
             <input type="text" name="coach-name" value="Tommy Winston">
         </form>
@@ -32,10 +32,10 @@
     </div>
     <div>
         <h3>New Coach Name!</h3>
-        <form id="team-up-coach">
+        <form class="update-form" id="team-up-coach">
             <input type="text" name="coach-name" value="...">
         </form>
-        <p> Click on a Coach's Name to update it!</p>
+        <p id="user-instruction"> Click on a Coach's Name to update it!</p>
     </div>
 </div>
 

@@ -65,6 +65,10 @@ function insertTeam(){
    inputObject.color = formInput["team-color"];
    inputObject.coach = formInput["coach-name"];
 
+   if(inputObject.color[0] == "#"){
+       inputObject.color = inputObject.color.substring(1, inputObject.color.length);
+   }
+
 
     
     /* Send http request */
@@ -82,6 +86,7 @@ function insertTeam(){
 
 function updateCoach(id){
     var inputs = document.querySelectorAll("#team-up-coach input");
+    var error = document.getElementById("error-instruction");
     var element = inputs[0];
     var name = null;
     for(var i = 0; i < inputs.length; i ++){
@@ -99,14 +104,14 @@ function updateCoach(id){
             if(xhttp.readyState == 4 && xhttp.status == 200) {
                 window.location.replace("/teams.html");
             }else if(xhttp.readyState == 4){
-                element.value = "ERROR!";
+                error.innerText = "Server Error. Try Again!";
             }
         }
         xhttp.open("POST", "/update/team-coach", true);
         xhttp.setRequestHeader("Content-Type", "application/json");
         xhttp.send(JSON.stringify({"id": id, "name": name}));
     }else{
-        element.value = "ERROR!";
+        error.innerText = "Try a different Value for name. Then click on another Coach's Name.";
     }
 }
 

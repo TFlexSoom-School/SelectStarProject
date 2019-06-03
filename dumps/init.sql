@@ -160,7 +160,7 @@ VALUES
 ("Boston Celtics", "Boston, MA", "008853", "Brad Stevens"),
 ("Cleveland Cavaliers", "Cleveland, OH", "860038", "Tyronn Lue"),
 ("Philadelphia 76ers", "Philadelphia, PA", "006BB6", "Brett Brown"),
-("Golden State Warriors", "Oakland, CA", "FFF00", "Steve Kerr"),
+("Golden State Warriors", "Oakland, CA", "FDB927", "Steve Kerr"),
 ("Portland Trailblazers", "Portland, OR", "FF0000", "Terry Stotts"),
 ("Milwaukee Bucks", "Milwaukee, WI", "008000", "Mike Budenholzer"),
 ("Toronto Raptors", "Toronto, ON", "FF0000", "Nick Nurse");

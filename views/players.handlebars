@@ -3,7 +3,7 @@
 <script src="player_script.js" defer></script>
 
 <div>
-    <form id="pl-search" onsubmit="search()" onsearch="search()">
+    <form class="search-form" id="pl-search" onsubmit="search()" onsearch="search()">
         <input type="text" name="searchbar" value="Search Player">
         <span class="button search-submit" onclick="search()">Search!</span> 
     </form>
@@ -15,7 +15,7 @@
 </div>
 <div class="player-form">
     <h2>New Player!</h2>
-    <form id="pl-insert">
+    <form class="insert-form" id="pl-insert">
         <label>Name</label>
         <input type="text" name="player-name" value="Wilson Chandler">
         <label>Jersey Number</label>
