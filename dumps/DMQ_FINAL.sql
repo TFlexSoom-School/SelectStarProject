@@ -70,6 +70,16 @@ SELECT pl.team_id FROM ssp_players pl WHERE pl.id = ":pid";
 SELECT pl.id FROM ssp_players pl
 WHERE pl.team_id = ":val";
 
+-- Set players team to null based on id
+-- Make sure Mandatory relationships are still good
+UPDATE ssp_players pl
+SET pl.team_id = NULL
+WHERE pl.id = ":pid";
+
+UPDATE ssp_players pl
+SET pl.team_id = (SELECT t.id FROM ssp_teams t WHERE t.name = ":tname" AND t.location = ":tloc" LIMIT 1)
+WHERE pl.id = ":pid";
+
 
 -- POSITION TABLE -------------------------------------------------------------------------------------------
 

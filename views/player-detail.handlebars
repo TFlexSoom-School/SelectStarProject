@@ -30,11 +30,24 @@
     {{/if}}
 </div>
 
-
-<div class="position-update form">
-    <h2>Add/Remove a Position</h2>
-    <form class="update-form" id="position-change">
-        <input type="text" name="position-name" value="Point Guard">
-    </form>
-    <div id="position-change-button" class="button" onclick="updatePosition({{id}})">Update!</div>
+<div class="forms-container">
+    <div class="position-update form">
+        <h2>Add/Remove a Position</h2>
+        <form class="insert-form" id="position-change">
+            <input type="text" name="position-name" value="Point Guard">
+        </form>
+        <div id="position-change-button" class="button" onclick="updatePosition({{id}})">Update!</div>
+    </div>
+    <hr />
+    <div class="team-update form">
+        <h2>Update Team</h2>
+        <div id="pl-det-response">Leave Fields Empty to Remove Team</div>
+        <form class="insert-form" id="team-change">
+            <label>Team Name</label>
+            <input type="text" name="team-name" value="Portland Trailblazers">
+            <label>Team Location</label>
+            <input type="text" name="team-loc" value="Portland, OR">
+        </form>
+        <div id="team-change-button" class="button" onclick="updateTeam({{id}})">Update!</div>
+    </div>
 </div>

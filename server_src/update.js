@@ -12,6 +12,7 @@
 module.exports = (db) => {
     var express = require("express");
     var router = express.Router();
+    var util = require("./util.js")(db);
 
     function deletePos(id, pid, res){
         db.pool.query(
@@ -96,6 +97,50 @@ module.exports = (db) => {
             });
     }
 
+    function removeTeamId(id, res, next){
+        util.playersTeamHasCollateral(id, 
+            () =>{
+                db.pool.query(
+                    "UPDATE ssp_players pl SET pl.team_id = NULL WHERE pl.id = ?;",
+                    [id],
+                    (error, results, fields)=>{
+                        if(error){
+                            console.log("== Query Error!");
+                            console.log(JSON.stringify(error));
+                            res.status(500).end();
+                        }else{
+                            next();
+                        }
+                    });
+            },
+            () => {
+                res.status(409).send("TeamMand");
+            })
+    }
+
+    function updateTeamId(context, res, next){
+        var sql = 
+        "UPDATE ssp_players pl " +
+        "SET pl.team_id = " +
+        "(SELECT t.id FROM ssp_teams t WHERE t.name = ? AND t.location = ? LIMIT 1) " +
+        "WHERE pl.id = ?;";
+        util.playersTeamHasCollateral(context.id,
+            () => {
+                db.pool.query(sql, [context["team-name"], context["team-loc"], context.id],
+                (error, results, fields) => {
+                    if(error){
+                        console.log("== Query Error!");
+                        console.log(JSON.stringify(error));
+                        res.status(500).end();
+                    }else{
+                        next();
+                    }
+                });
+            },
+            () => {
+                res.status(409).send("TeamMand");
+            })
+    }
 
     /* Post Routes */
 
@@ -107,6 +152,17 @@ module.exports = (db) => {
 
     router.post("/team-coach", (req, res) => {
         updateTeamCoach(req.body.id, req.body.name, res);
+    });
+
+    router.post("/pl-team-up", (req, res) => {
+        function success(){
+            res.status(200).end();
+        }
+        if(req.body.None){
+            removeTeamId(req.body.id, res, success);
+        }else{
+            updateTeamId(req.body, res, success);
+        }
     });
     
     return router;
