@@ -51,6 +51,7 @@ function search(){
 function insertTeam(){
 
     var inputs = document.querySelectorAll("#team-insert input")
+    var select = document.querySelectorAll("#team-insert select")[0];
     var formInput = {};
     var val;
     for(var i = 0; i < inputs.length; i ++){
@@ -70,6 +71,7 @@ function insertTeam(){
    inputObject.location = formInput["team-loc"];
    inputObject.color = formInput["team-color"];
    inputObject.coach = formInput["coach-name"];
+   inputObject.player = select.value;
 
    if(inputObject.color[0] == "#"){
        inputObject.color = inputObject.color.substring(1, inputObject.color.length);
@@ -164,7 +166,7 @@ function populateSelector(){
             if(pl.players.length == 0){
                 declineService();
             }else{
-                populate(JSON.parse(text).players);
+                populate(pl.players);
             }
         }else if(xhttp.readyState == 4){
             declineService();

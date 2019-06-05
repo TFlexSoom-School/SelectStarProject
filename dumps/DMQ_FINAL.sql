@@ -30,6 +30,11 @@ WHERE id = ':teamID';
 INSERT INTO ssp_players(team_id, jersey, fname, lname, nickname, games, points)
 VALUES ((select id from ssp_teams where name = ':teamName'), :insertJersey, ':insertFName', ':insertLName', ':insertNickname', :numGames, :numPoints);
 
+-- Added possible team ID for above
+INSERT INTO ssp_players (fname, lname, jersey, games, points) VALUES (":fname",":lname",":jersey",":games",":points");
+-- Added possible team ID for above
+INSERT INTO ssp_players (fname, lname, jersey, games, points, team_id) VALUES (":fname",":lname",":jersey",":games",":points",":teamID");
+
 -- edit 5/12 delete a player's info using first and last name
 DELETE FROM ssp_players
 WHERE fname = ":insertFname" and lname = 'insertLName';

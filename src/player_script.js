@@ -48,7 +48,9 @@ function search(){
 
 function insertPlayer(){
 
-    var inputs = document.querySelectorAll("#pl-insert input")
+    var inputs = document.querySelectorAll("#pl-insert input");
+    var select = document.querySelectorAll("#pl-insert select")[0];
+    console.log(inputs);
     var formInput = {};
     var val;
     var name;
@@ -61,6 +63,7 @@ function insertPlayer(){
             return;
         }
     }
+    
 
     /* TODO */
     /* Alert User to any required Fields */
@@ -74,6 +77,11 @@ function insertPlayer(){
     inputObject.jersey = formInput["player-jersey"];
     inputObject.games = formInput["player-games"];
     inputObject.points = formInput["player-points"];
+    inputObject.team = select.value;
+
+    if(inputObject.team === ""){
+        inputObject.team = null;
+    }
 
     /* Add functionality for Positions */
     inputObject.positions = formInput["player-positions"].split(", ").filter((element) => element != "..." && element != "");
@@ -83,7 +91,10 @@ function insertPlayer(){
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = () => {
         if(xhttp.readyState == 4 && xhttp.status == 200) {
-            window.location.replace("/players.html");
+            //window.location.replace("/players.html");
+        }else if(xhttp.readyState == 4){
+            alert("error!");
+            //window.location.replace("/players.html");
         }
     }
     xhttp.open("POST", "/create/player", true);
@@ -107,9 +118,39 @@ function removePlayer(id){
     xhttp.send();
 }
 
+function populateSelector(){
+    function populate(players){
+        var selectInput = document.getElementById("player-team-selector");
+        var nodeTemp = {};
+        players.forEach((element) => {
+            nodeTemp = document.createElement("option");
+            nodeTemp.setAttribute("value", element.id);
+            nodeTemp.appendChild(document.createTextNode(element.teamDetails));
+            selectInput.appendChild(nodeTemp);
+        });
+    }
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("GET", "/read/teamText", true);
+    xhttp.onreadystatechange = () => {
+        if(xhttp.readyState == 4 && xhttp.status == 200){
+            var text = xhttp.responseText;
+            if(text != null || text != ""){
+                var t= JSON.parse(text);
+                if(t.teams.length != 0){
+                    populate(t.teams);
+                }
+            }
+        }
+    }
+    xhttp.send();
+
+}
+
 /* Script */
 //console.log("== LOADED PLAYER_SCRIPT!");
 search();
+populateSelector();
 
 document.getElementById("pl-search").addEventListener('submit', (e) => {
     search();

@@ -109,34 +109,63 @@ module.exports = (db) => {
 
     }
 
+    function insertPlayerPos(context, res, next){
+        sql = "INSERT INTO ssp_players_positions (player_id, position_id) " +
+                "VALUES ((SELECT p.id FROM ssp_players p WHERE p.fname = ? AND p.lname = ? ORDER BY p.id DESC LIMIT 1), " +
+                "(SELECT pos.id FROM ssp_positions pos WHERE pos.name = ?))";
+            context.positions.forEach((element) => {
+                inserts = [context.fname, context.lname, element];
+                db.pool.query(sql, inserts, (error, results, fields) => {
+                    if(error){
+                        console.log(error)
+                        next();
+                    }else{
+                        next();
+                    }
+                });
+            });
+    }
 
-    /* Routes */
-    
-    router.post('/player', function(req, res){
-        var sql = "INSERT INTO ssp_players (fname, lname, jersey, games, points) VALUES (?,?,?,?,?)";
-        var inserts = [req.body.fname, req.body.lname, req.body.jersey, req.body.games,req.body.points];
+    function insertPlayerNoTeam(context, res, next){
+        var sql = "INSERT INTO ssp_players (fname, lname, jersey, games, points) VALUES (?,?,?,?,?);";
+        var inserts = [context.fname, context.lname, context.jersey, context.games,context.points];
         db.pool.query(sql,inserts,function(error, results, fields){
             if(error){
                 console.log(JSON.stringify(error))
                 res.write(JSON.stringify(error));
                 res.status(500).end();
             }else{
-                
-                sql = "INSERT INTO ssp_players_positions (player_id, position_id) " +
-                "VALUES ((SELECT p.id FROM ssp_players p WHERE p.fname = ? AND p.lname = ? ORDER BY p.id DESC LIMIT 1), " +
-                "(SELECT pos.id FROM ssp_positions pos WHERE pos.name = ?))";
-                req.body.positions.forEach((element) => {
-                    inserts = [req.body.fname, req.body.lname, element];
-                    db.pool.query(sql, inserts, (error, results, fields) => {
-                        if(error){
-                            console.log(error)
-                        }
-                        console.log("== Query done!")
-                    });
-                });
-                res.status(200).end();
+                insertPlayerPos(context, res, next);
             }
         });
+    }
+
+    function insertPlayerTeam(context, res, next){
+        var sql = "INSERT INTO ssp_players (fname, lname, jersey, games, points, team_id) VALUES (?,?,?,?,?,?);";
+        var inserts = [context.fname, context.lname, context.jersey, context.games,context.points, context.team];
+        db.pool.query(sql,inserts,function(error, results, fields){
+            if(error){
+                console.log(JSON.stringify(error))
+                res.write(JSON.stringify(error));
+                res.status(500).end();
+            }else{
+                insertPlayerPos(context, res, next);
+            }
+        });
+    }
+
+
+    /* Routes */
+    
+    router.post('/player', function(req, res){
+        function next(){
+            res.status(200).end();
+        }
+        if(req.body.team == null){
+            insertPlayerNoTeam(req.body, res, next);
+        }else{
+            insertPlayerTeam(req.body, res, next);
+        }
     });
     
    router.post('/team', function(req, res){
@@ -144,10 +173,25 @@ module.exports = (db) => {
         var inserts = [req.body.name, req.body.location, req.body.color, req.body.coach];
         db.pool.query(sql,inserts,function(error, results, fields){
             if(error){
-                console.log(JSON.stringify(error));
                 res.status(500).end();
+                console.log("== Query Error!");
+                console.log(JSON.stringify(error));
             }else{
-                res.status(200).end();
+                var tid = results.insertId;
+                sql = "UPDATE ssp_players p SET p.team_id = ? WHERE p.id = ?";
+                inserts = [tid, req.body.player];
+                db.pool.query(sql, inserts, (error, results, fields) =>
+                {
+                    if(error){
+                        db.pool.query("DELETE FROM ssp_teams WHERE id = ?", [tid], () => {});
+                        res.status(500).end();
+                        console.log("== Query Error!");
+                        console.log(JSON.stringify(error));
+                    }else{
+                        res.status(200).end();
+                    }
+                });
+                
             }
         });
 

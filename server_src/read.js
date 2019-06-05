@@ -355,6 +355,19 @@ module.exports = (db) => {
         }
     }
 
+    function formatTeamStrings(teamObjectArray){
+        var text = "";
+        for(var i = 0; i < teamObjectArray.length; i ++){
+            text = teamObjectArray[i].name + 
+            " Location: " + teamObjectArray[i].loc;
+            delete teamObjectArray[i].name;
+            delete teamObjectArray[i].loc;
+            delete teamObjectArray[i].coach;
+            delete teamObjectArray[i].color;
+            teamObjectArray[i].teamDetails = text;
+        }
+    }
+
     /* GET Rules */
 
     router.get("/mrg", (req, res) => {
@@ -495,6 +508,15 @@ module.exports = (db) => {
             res.status(200).render("results", context);
         }
         getTeamsName(name, context.results, res, next);
+    });
+
+    router.get("/teamText", (req, res) => {
+        var results = [];
+        function next(){
+            formatTeamStrings(results);
+            res.status(200).send(JSON.stringify({teams: results}));
+        }
+        getTeamsStar(results, res, next);
     });
 
     router.get("/ma", (req, res) => {
