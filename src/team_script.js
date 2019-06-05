@@ -52,8 +52,14 @@ function insertTeam(){
 
     var inputs = document.querySelectorAll("#team-insert input")
     var formInput = {};
+    var val;
     for(var i = 0; i < inputs.length; i ++){
-        formInput[inputs[i].getAttribute("name")] = inputs[i].value;
+        val = inputs[i].value;
+        formInput[inputs[i].getAttribute("name")] = val;
+        if(val == "" || val == null || val == "Error!"){
+            document.getElementById("team-insert-error").innerText = "Bad Values!";
+            return;
+        }
     }
 
 
@@ -126,9 +132,52 @@ function removeTeam(id){
     xhttp.send();
 }
 
+function populateSelector(){
+    function populate(players){
+        var selectInput = document.getElementById("free-agent-selector");
+        var nodeTemp = {};
+        players.forEach((element) => {
+            nodeTemp = document.createElement("option");
+            nodeTemp.setAttribute("value", element.id);
+            nodeTemp.appendChild(document.createTextNode(element.playerDetails));
+            selectInput.appendChild(nodeTemp);
+        });
+    }
+
+    function declineService(){
+        var insertFormContainer = document.getElementById("team-insert-container");
+        var insertForm = document.getElementById("team-insert");
+        insertFormContainer.removeChild(insertForm);
+        var heading = document.querySelectorAll(".team-forms h3")[0];
+        heading.innerText = "No Free Agent Players. Go add players with Teams to insert teams! Otherwise Refresh Page!";
+    }
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("GET", "/read/pl-free-agents", true);
+    xhttp.onreadystatechange = () => {
+        if(xhttp.readyState == 4 && xhttp.status == 200){
+            var text = xhttp.responseText;
+            if(text == null || text == ""){
+                declineService();
+            }
+            var pl = JSON.parse(text);
+            if(pl.players.length == 0){
+                declineService();
+            }else{
+                populate(JSON.parse(text).players);
+            }
+        }else if(xhttp.readyState == 4){
+            declineService();
+        }
+    }
+    xhttp.send();
+
+}
+
 /* Script */
 
 search();
+populateSelector();
 
 document.getElementById("team-search").addEventListener('submit', (e) => {
     search();

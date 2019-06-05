@@ -34,6 +34,10 @@ function insertMascot(){
     var context = {};
     inputs.forEach((element) => {
         context[element.getAttribute("name")] = element.value;
+        if(element.value == "" || element.value == null || element.value == "Error!"){
+            document.getElementById("insert-response").innerText = "Bad Values!";
+            return;
+        }
     });
 
     var xhttp = new XMLHttpRequest();

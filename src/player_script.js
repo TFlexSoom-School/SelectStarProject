@@ -50,8 +50,16 @@ function insertPlayer(){
 
     var inputs = document.querySelectorAll("#pl-insert input")
     var formInput = {};
+    var val;
+    var name;
     for(var i = 0; i < inputs.length; i ++){
-        formInput[inputs[i].getAttribute("name")] = inputs[i].value;
+        val = inputs[i].value;
+        name = inputs[i].getAttribute("name");
+        formInput[name] = val;
+        if(name != "player-team" && (val == "" || val == null || val == "Error!")){
+            document.getElementById("player-insert-error").innerText = "Bad Values!";
+            return;
+        }
     }
 
     /* TODO */

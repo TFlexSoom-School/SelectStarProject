@@ -321,6 +321,40 @@ module.exports = (db) => {
             });
     }
 
+    function getFreeAgentsStar(context, res, next){
+        db.pool.query(
+            "SELECT pl.id, pl.fname, pl.lname, pl.jersey " +
+            "FROM ssp_players pl " +
+            "WHERE pl.team_id IS NULL;",
+            (err, results, fields) => {
+                if(err){
+                    console.log("== Query ERROR");
+                    console.log(err);
+                    res.status(500).end();
+                }else{
+                    results.forEach((element) => {
+                        context.push(element);
+                    });
+                    next();
+                }
+            });
+    }
+
+
+    /* Other Utility Functions */
+
+    function formatPlayerStrings(playerObjectArray){
+        var text = "";
+        for(var i = 0; i < playerObjectArray.length; i ++){
+            text = playerObjectArray[i].fname + " " + playerObjectArray[i].lname;
+            text += " Jersey Number: " + playerObjectArray[i].jersey;
+            delete playerObjectArray[i].fname;
+            delete playerObjectArray[i].lname;
+            delete playerObjectArray[i].jersey;
+            playerObjectArray[i].playerDetails = text;
+        }
+    }
+
     /* GET Rules */
 
     router.get("/mrg", (req, res) => {
@@ -371,6 +405,15 @@ module.exports = (db) => {
             res.status(200).render("results", context);
         }
         getPlayersStar(context.results, res, next);
+    });
+
+    router.get("/pl-free-agents", (req, res) => {
+        var results = [];
+        function next(){
+            formatPlayerStrings(results);
+            res.status(200).send(JSON.stringify({players: results}));
+        }
+        getFreeAgentsStar(results, res, next);
     });
 
     router.get("/pl-:name", (req, res) => {

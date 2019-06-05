@@ -58,6 +58,12 @@ pl.games, pl.points, pl.jersey AS "jersey_num", t.name AS teamName FROM ssp_play
 LEFT JOIN ssp_teams t ON pl.team_id = t.id
 WHERE pl.fname = ":val" OR pl.lname = ":val";
 
+-- Find the keys of a free agent
+SELECT pl.id, pl.fname, pl.lname, pl.jersey
+FROM ssp_players pl
+WHERE pl.team_id IS NULL;
+
+
 -- POSITION TABLE -------------------------------------------------------------------------------------------
 
 -- show all names within positions.
