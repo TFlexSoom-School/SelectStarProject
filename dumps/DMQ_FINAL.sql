@@ -63,6 +63,13 @@ SELECT pl.id, pl.fname, pl.lname, pl.jersey
 FROM ssp_players pl
 WHERE pl.team_id IS NULL;
 
+-- Find team id of given player id
+SELECT pl.team_id FROM ssp_players pl WHERE pl.id = ":pid";
+
+-- Find players of the same team
+SELECT pl.id FROM ssp_players pl
+WHERE pl.team_id = ":val";
+
 
 -- POSITION TABLE -------------------------------------------------------------------------------------------
 

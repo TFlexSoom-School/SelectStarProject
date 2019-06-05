@@ -97,6 +97,11 @@ function removePlayer(id){
     xhttp.onreadystatechange = () => {
         if(xhttp.readyState == 4 && xhttp.status == 200){
             window.location.replace("/players.html");
+        }else if(xhttp.readyState == 4 && xhttp.status == 409){
+            alert("Empty Teams Are Not Allowed! Delete the Team First!");
+        }else if(xhttp.readyState == 4){
+            alert("ERROR!");
+            window.location.replace("/players.html");
         }
     }
     xhttp.send();

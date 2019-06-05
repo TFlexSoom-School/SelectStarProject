@@ -42,6 +42,35 @@ module.exports = (db) => {
             });
     }
 
+    /* Utility Queries */
+    function teamHasCollateral(id, true_func, false_func){
+        db.pool.query(
+            "SELECT pl.team_id FROM ssp_players pl WHERE pl.id = ?;",
+            [id],
+            (error, results, fields) => {
+                if(error){
+                    false_func();
+                }else if(results[0].team_id == null){
+                    true_func();
+                }else{
+                    db.pool.query(
+                                "SELECT pl.id FROM ssp_players pl WHERE pl.team_id = ?;",
+                                [results[0].team_id],
+                                (error, results, fields) => {
+                                    if(error){
+                                        false_func();
+                                    }else if(results.length > 1){
+                                        true_func();
+                                    }else{
+                                        false_func();
+                                    }
+                                });
+                }
+            });
+        
+    }
+
+
     /* Routes */
 
     router.post("/mascot-:id", (req, res) => {
@@ -55,10 +84,14 @@ module.exports = (db) => {
     });
 
     router.post("/player-:id", (req, res) =>{
-        console.log(req.url);
-        console.log(req.params);
-        var sql = "DELETE FROM ssp_players WHERE id = ?;";
-        simpleQuery(sql, [req.params.id], res);
+        teamHasCollateral(req.params.id, 
+        () => {
+            var sql = "DELETE FROM ssp_players WHERE id = ?;";
+            simpleQuery(sql, [req.params.id], res);
+        }, 
+        () =>{
+            res.status(409).send("TeamMand");
+        });
     });
 
     router.post("/game-:id", (req, res) =>{
