@@ -85,6 +85,8 @@ function insertTeam(){
     xhttp.onreadystatechange = () => {
         if(xhttp.readyState == 4 && xhttp.status == 200) {
             window.location.replace("/teams.html");
+        }else if(xhttp.readyState == 4){
+            document.getElementById("team-insert-error").innerText = "Error... That team may already exist!";
         }
     }
     xhttp.open("POST", "/create/team", true);
@@ -129,6 +131,8 @@ function removeTeam(id){
     xhttp.onreadystatechange = () => {
         if(xhttp.readyState == 4 && xhttp.status == 200){
             window.location.replace("/teams.html");
+        }else if(xhttp.readyState == 4){
+            alert("Error!");
         }
     }
     xhttp.send();

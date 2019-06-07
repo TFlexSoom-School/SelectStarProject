@@ -91,10 +91,9 @@ function insertPlayer(){
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = () => {
         if(xhttp.readyState == 4 && xhttp.status == 200) {
-            //window.location.replace("/players.html");
+            window.location.replace("/players.html");
         }else if(xhttp.readyState == 4){
             alert("error!");
-            //window.location.replace("/players.html");
         }
     }
     xhttp.open("POST", "/create/player", true);
