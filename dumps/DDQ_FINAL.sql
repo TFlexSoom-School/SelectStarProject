@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: classmysql.engr.oregonstate.edu:3306
--- Generation Time: May 26, 2019 at 06:05 PM
+-- Generation Time: Jun 10, 2019 at 03:28 PM
 -- Server version: 10.3.13-MariaDB-log
 -- PHP Version: 7.0.33
 
@@ -43,12 +43,12 @@ CREATE TABLE `ssp_games` (
 --
 
 INSERT INTO `ssp_games` (`id`, `play_date`, `location`, `winning_team`, `mvp`, `score_home`, `score_visit`) VALUES
-(1, '2019-03-09', 'Los Angelos', 0, NULL, 107, 120),
-(2, '2019-02-10', 'Philadelphia', 1, 6, 143, 120),
-(3, '2019-01-23', 'Boston', 1, NULL, 123, 103),
-(4, '2018-12-16', 'Cleveland', 0, 7, 105, 128),
-(5, '2019-05-12', 'Portland', 1, 12, 100, 80),
-(6, '2019-05-10', 'Houston', 1, 8, 90, 85);
+(1, '2019-03-09', 'Los Angelos, CA', 0, NULL, 107, 120),
+(2, '2019-02-10', 'Philadelphia, PA', 1, 6, 143, 120),
+(3, '2019-01-23', 'Boston, MA', 1, NULL, 123, 103),
+(4, '2018-12-16', 'Cleveland, OH', 0, 7, 105, 128),
+(5, '2019-05-12', 'Portland, OR', 1, 12, 100, 80),
+(6, '2019-05-10', 'Houston, TX', 1, 8, 90, 85);
 
 -- --------------------------------------------------------
 
@@ -222,7 +222,7 @@ INSERT INTO `ssp_teams` (`id`, `name`, `location`, `color`, `coach`) VALUES
 (2, 'Boston Celtics', 'Boston, MA', '008853', 'Brad Stevens'),
 (3, 'Cleveland Cavaliers', 'Cleveland, OH', '860038', 'Tyronn Lue'),
 (4, 'Philadelphia 76ers', 'Philadelphia, PA', '006BB6', 'Brett Brown'),
-(5, 'Golden State Warriors', 'Oakland, CA', 'FFF00', 'Steve Kerr'),
+(5, 'Golden State Warriors', 'Oakland, CA', 'FDB927', 'Steve Kerr'),
 (6, 'Portland Trailblazers', 'Portland, OR', 'FF0000', 'Terry Stotts'),
 (7, 'Milwaukee Bucks', 'Milwaukee, WI', '008000', 'Mike Budenholzer'),
 (8, 'Toronto Raptors', 'Toronto, ON', 'FF0000', 'Nick Nurse');
@@ -236,6 +236,7 @@ INSERT INTO `ssp_teams` (`id`, `name`, `location`, `color`, `coach`) VALUES
 --
 ALTER TABLE `ssp_games`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `U_play_loc` (`play_date`,`location`),
   ADD KEY `FK_mvPlayer` (`mvp`),
   ADD KEY `play_date` (`play_date`,`location`);
 
@@ -252,6 +253,7 @@ ALTER TABLE `ssp_games_teams`
 ALTER TABLE `ssp_mascots`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `team_id` (`team_id`),
+  ADD UNIQUE KEY `team_id_3` (`team_id`),
   ADD KEY `team_id_2` (`team_id`);
 
 --
@@ -259,6 +261,8 @@ ALTER TABLE `ssp_mascots`
 --
 ALTER TABLE `ssp_players`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `U_players_names` (`fname`,`lname`,`nickname`),
+  ADD UNIQUE KEY `U_players_team_jers` (`team_id`,`jersey`),
   ADD KEY `fname` (`fname`,`lname`,`nickname`),
   ADD KEY `team_id` (`team_id`,`jersey`);
 
@@ -281,6 +285,10 @@ ALTER TABLE `ssp_positions`
 --
 ALTER TABLE `ssp_teams`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `U_teams_name_loc` (`name`,`location`),
+  ADD UNIQUE KEY `U_teams_name_coa` (`name`,`coach`),
+  ADD UNIQUE KEY `U_teams_name_col` (`name`,`color`),
+  ADD UNIQUE KEY `U_teams_loc_col` (`location`,`color`),
   ADD KEY `name` (`name`,`location`),
   ADD KEY `name_2` (`name`,`coach`),
   ADD KEY `name_3` (`name`,`color`),
