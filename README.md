@@ -18,15 +18,15 @@ The DDQ_FINAL.sql file and init.sql file perform the same operations ideally. Th
 
 ### Configuring dbcon.js
 
-The dbcon file is as follows in the `/server_src` directory off of the project root.
-`var mysql = require('mysql');`
-`var pool = mysql.createPool({`
-` connectionLimit : 10,`
-` host            : 'HOSTNAME',`
-` user            : 'USER_NAME',`
-` password        : 'PASSWORD',`
-` database        : 'SCHEMA_NAME'`
-`});`
+The dbcon file is as follows in the `/server_src` directory off of the project root.  
+`var mysql = require('mysql');`  
+`var pool = mysql.createPool({`  
+` connectionLimit : 10,`  
+` host            : 'HOSTNAME',`  
+` user            : 'USER_NAME',`  
+` password        : 'PASSWORD',`  
+` database        : 'SCHEMA_NAME'`  
+`});`  
 Simply fill in the capital variables above with the actual string representations of the fields. These are the details of your database which the server needs to access. If you need more information, look at the [mysql](https://www.npmjs.com/package/mysql#introduction) package on npm.
 
 ### Running the server
