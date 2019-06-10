@@ -449,7 +449,7 @@ module.exports = (db) => {
     router.get("/pos", (req, res) => {
         var context = { positions: [], isPartial: true, layout: null};
         db.pool.query(
-            "SELECT pos.name FROM ssp_positions pos;",
+            "SELECT pos.id, pos.name FROM ssp_positions pos;",
             (err, results, fields) => {
                 if (err) {
                     console.log("== Query ERROR");

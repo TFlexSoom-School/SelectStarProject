@@ -67,6 +67,11 @@ module.exports = (db) => {
         });
     });
 
+    router.post("/position-:id", (req, res) =>{
+        var sql = "DELETE FROM ssp_positions WHERE id = ?;";
+        simpleQuery(sql, [req.params.id], res);
+    });
+
     router.post("/game-:id", (req, res) =>{
         var sql = "DELETE FROM ssp_games WHERE ssp_games.id = ?;";
         simpleQuery(sql, [req.params.id], res);

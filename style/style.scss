@@ -11,6 +11,9 @@
 
 @import "partials/base";
 @import "partials/header";
+@import "partials/team";
+@import "partials/game";
+@import "partials/positions";
 
 
 /* general styles */
@@ -61,8 +64,7 @@ li{
     margin: 4px;
 }
 
-.removal{
-    display: flex;
+%remove {
     align-items: center;
     justify-content: center;
     border-radius: 20px;
@@ -70,41 +72,17 @@ li{
     padding: 8px;
 }
 
-.removal:hover{
+.removal{
+    @extend %remove;
+    display: flex;
+}
+
+.removal-inline{
+    @extend %remove;
+    display: inline-flex;
+}
+
+.removal:hover, .removal-inline:hover{
     background-color: #FF2000;
-}
-
-/* Teams Styles */
-.team-row h3{
-    display: block;
-}
-.team-row ul{
-    display: block;
-}
-
-.row{
-    justify-content: space-around;
-    align-items: center;
-}
-
-.team-box .coach-attr{
-    display: inline-block;
-    border-radius: 20px;
-    border: solid 2px #5a5a5a;
-    padding: 3px;
-}
-
-.team-box .coach-attr:hover{
-    border: solid 2px #c8dbdb;
     cursor: pointer;
-}
-
-/* Game Styles */
-.winner-text{
-    text-decoration: underline;
-}
-
-.score-list{
-    font-size: 18px;
-    font-weight: 600;
 }

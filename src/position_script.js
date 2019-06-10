@@ -51,5 +51,21 @@ function insertPosition(){
     xhttp.send(JSON.stringify(context));
 }
 
+function removePosition(id){
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("POST", "/delete/position-" + id.toString(), true);
+    xhttp.onreadystatechange = () => {
+        if(xhttp.readyState == 4 && xhttp.status == 200){
+            window.location.replace("/positions.html");
+        }else if(xhttp.readyState == 4 && xhttp.status == 409){
+            alert("There is a conflict :(");
+        }else if(xhttp.readyState == 4){
+            alert("ERROR!");
+            window.location.replace("/positions.html");
+        }
+    }
+    xhttp.send();
+}
+
 /* Script */
 load();

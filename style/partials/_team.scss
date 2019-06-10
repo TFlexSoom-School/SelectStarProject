@@ -1,0 +1,33 @@
+/*
+ *
+ * Tristan Hilbert
+ * 6/10/2019
+ * Team Styles Partial
+ *
+ */
+
+
+/* Teams Styles */
+.team-row h3{
+    display: block;
+}
+.team-row ul{
+    display: block;
+}
+
+.row{
+    justify-content: space-around;
+    align-items: center;
+}
+
+.team-box .coach-attr{
+    display: inline-block;
+    border-radius: 20px;
+    border: solid 2px #5a5a5a;
+    padding: 3px;
+}
+
+.team-box .coach-attr:hover{
+    border: solid 2px #c8dbdb;
+    cursor: pointer;
+}

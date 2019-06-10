@@ -10,7 +10,13 @@
     <h2>Position List</h2>
     <ul>
         {{#each positions}}
-        <li> {{name}} </li>
+        <li> 
+            {{name}} 
+
+            <span class="removal-inline" onclick="removePosition({{id}})">
+                Remove!
+            </span>
+        </li>
         {{/each}}
     </ul>
     {{/if}}

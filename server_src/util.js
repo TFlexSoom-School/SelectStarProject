@@ -12,7 +12,7 @@ module.exports = (db) => {
     var r_exports = {};
     
     /* Utility Queries */
-    r_exports.playersTeamHasCollateral = function playersTeamHasCollateral(id, true_func, false_func){
+    r_exports.playersTeamHasCollateral = function(id, true_func, false_func){
         db.pool.query(
             "SELECT pl.team_id FROM ssp_players pl WHERE pl.id = ?;",
             [id],

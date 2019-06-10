@@ -1,5 +1,8 @@
 -- Gary and Tristan"s Initial SQL queries
 -- Use these to create the tables
+--
+--
+-- These are User Created
 
 -- Drop any existing tables :P
 DROP TABLE IF EXISTS ssp_players_positions;
