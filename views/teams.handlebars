@@ -2,7 +2,7 @@
 <!-- <script src="src/game_script.js" defer></script> --> 
 <script src="team_script.js" defer></script>
 
-<div>
+<div>    
     <form class="search-form" id="team-search" onsubmit="search()" onsearch="search()">
         <input type="text" name="searchbar" value="Search Teams">
         <span class="button search-submit" onclick="search()">Search!</span> 
@@ -33,14 +33,16 @@
                 {{! I was going to do this via handlebars, but decided with ClientJS instead.}}
             </select>
         </form>
-        <span class="button insert-submit" onclick="insertTeam()">Submit!</span>
+        <span class="button insert-submit" onclick="insertTeam()">Insert New Team!</span>
     </div>
+    <hr />
     <div>
         <h3>New Coach Name!</h3>
+        <p id="user-instruction"> Enter a name then click team's coach to update it!</p>
         <form class="update-form" id="team-up-coach">
             <input type="text" name="coach-name" value="...">
         </form>
-        <p id="user-instruction"> Click on a Coach's Name to update it!</p>
+        
     </div>
 </div>
 
